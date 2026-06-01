@@ -51,7 +51,16 @@ export function enhanceShopLayout() {
 
       style.id = "stardance-layout-style";
 
+
       style.textContent = `
+      .shop-hub {
+      padding: 1.5rem clamp(0.75rem, 2vw, 2rem) 4rem !important; 
+      }
+
+      .discover-rail__heading {
+      margin-bottom: 10px !important;
+    }
+
 
       
         .shop-hub__rail {
@@ -74,7 +83,7 @@ export function enhanceShopLayout() {
           align-items:center;
           justify-content:center;
           padding:8px 18px;
-          margin-right:10px;
+          margin-right:8px;
           margin-top:20px;
           border-radius:12px;
           text-decoration:none;
@@ -130,13 +139,11 @@ export function enhanceShopLayout() {
           .shop-hub__topbar-right {
             display:flex;
             gap:10px;
-      
           }
 
-          #stardance-orders-btn {
-            flex:1;
-            margin:0;
-          }
+          .sidebar__nav-lock {
+  display: none !important;
+}
 
           .shop-hub__region {
             flex:1;

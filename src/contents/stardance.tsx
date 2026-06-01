@@ -8,8 +8,8 @@ function StardanceContent() {
       <div
         style={{
           position: "fixed",
-          bottom: "20px",
-          right: "20px",
+          top: "10px",
+          right: "10px",
           zIndex: 999998,
           background: "#1c1c1f",
           color: "#f0eeeb",

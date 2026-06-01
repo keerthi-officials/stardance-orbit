@@ -74,7 +74,7 @@ style.textContent = `
 .shop-item-card__star {
   top: 14px !important;
   right: 14px !important;
-  z-index: 9999 !important;
+  z-index: 99 !important;
 
   width: 40px !important;
   height: 40px !important;
@@ -118,7 +118,7 @@ style.textContent = `
   background: white !important;
   border: none !important;
 
-  z-index: 999999 !important;
+  z-index: 99 !important;
 
   box-shadow:
     0 4px 10px rgba(0,0,0,.08),
