@@ -67,11 +67,11 @@ export function enhanceShopLayout() {
         }
 
         .shop-hub__main {
-  width:100% !important;
-  max-width:none !important;
-  margin-top:24px !important;
-  margin-bottom:32px !important;
-}
+          width:100% !important;
+          max-width:none !important;
+          margin-top:24px !important;
+          margin-bottom:32px !important;
+        }
 
         #stardance-orders-btn {
           display:flex;
@@ -106,9 +106,9 @@ export function enhanceShopLayout() {
         }
 
         .discover-rail__section--wishlist .shop-goals__items {
-         display: grid !important;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
-  gap: 16px !important;
+          display: grid !important;
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+          gap: 16px !important;
         }
 
         .discover-rail__section--wishlist .shop-goals__item {
@@ -137,8 +137,8 @@ export function enhanceShopLayout() {
           }
 
           .sidebar__nav-lock {
-  display: none !important;
-}
+            display: none !important;
+          }
 
           .shop-hub__region {
             flex:1;
