@@ -152,13 +152,3 @@ style.textContent = `
 
   document.head.appendChild(style);
 }
-
-import { useEffect } from "react";
-
-export default function Overlay() {
-  useEffect(() => {
-    enhanceShopCards();
-  }, []);
-
-  return null;
-}

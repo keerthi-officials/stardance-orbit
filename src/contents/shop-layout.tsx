@@ -30,10 +30,6 @@ export function enhanceShopLayout() {
       ".shop-hub__main",
     ) as HTMLElement | null;
 
-    const newItems = document.querySelector(
-      ".shop-hub__items--new",
-    ) as HTMLElement | null;
-
     if (updatesSection && mainSection) {
       updatesSection.remove();
 
@@ -50,7 +46,6 @@ export function enhanceShopLayout() {
       const style = document.createElement("style");
 
       style.id = "stardance-layout-style";
-
 
       style.textContent = `
       .shop-hub {
@@ -168,19 +163,7 @@ export function enhanceShopLayout() {
     }
   }
 
-  setTimeout(init, 500);
+  init();
 
-  document.addEventListener("turbo:load", () => {
-    setTimeout(init, 300);
-  });
-}
-
-import { useEffect } from "react";
-
-export default function Overlay() {
-  useEffect(() => {
-    enhanceShopLayout();
-  }, []);
-
-  return null;
+  document.addEventListener("turbo:load", init);
 }
