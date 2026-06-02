@@ -19,8 +19,7 @@ function StardanceContent() {
           fontWeight: 600,
         }}
       >
-        ✨ Active
-      </div>
+a      </div>
     </>
   );
 }

@@ -1,7 +1,9 @@
+import { enhanceProjectPage } from "~contents/project";
 import { enhanceShopPage } from "~contents/shop";
 
 async function syncEnhancements(): Promise<void> {
   enhanceShopPage();
+  enhanceProjectPage();
 }
 
 let syncScheduled = false;

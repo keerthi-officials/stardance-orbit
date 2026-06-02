@@ -1,0 +1,58 @@
+/* ─── Project page: Inline composer shell ────────────────────────────────────*/
+
+.su-inline-composer-shell {
+  margin-bottom: 1.5rem;
+}
+
+.su-inline-composer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.su-inline-composer-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+  color: inherit;
+}
+
+.su-inline-composer {
+  border-radius: 0.5rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.su-hero-ship {
+  position: absolute !important;
+  top: 1rem !important;
+  height: 50px;
+  right: 1rem !important;
+  margin: 0 !important;
+  z-index: 10;
+  border-radius: 10px !important;
+}
+
+.action-btn:disabled, .action-btn--disabled {
+  opacity: 0.9 !important;
+}
+
+.su-inline-edit {
+  border-radius: 0.5rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  min-height: 6rem;
+}
+
+.su-inline-edit-close-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0.75rem;
+}
+
+.su-inline-edit-card {
+  width: 100%;
+}
