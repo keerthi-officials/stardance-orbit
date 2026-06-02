@@ -1,15 +1,15 @@
-.su-inline-composer-shell {
+.sd-shell {
   margin-bottom: 1.5rem;
 }
 
-.su-inline-composer-header {
+.sd-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 0.75rem;
 }
 
-.su-inline-composer-title {
+.sd-title {
   font-size: 1rem;
   font-weight: 600;
   margin: 0;

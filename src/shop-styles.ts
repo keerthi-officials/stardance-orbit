@@ -156,6 +156,8 @@ const SHOP_CSS = `
 }
 
 .shop-item-card {
+  --card-bg: #ffffff !important;
+  --card-border: transparent !important;
   background: #ffffff !important;
   border: none !important;
   border-radius: 18px !important;

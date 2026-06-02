@@ -16,11 +16,9 @@ function isDevlogComposer(composer: Element | null): boolean {
   return projectId ? action.includes(`/projects/${projectId}/devlogs`) : true;
 }
 
-
 function removeCompleteInfoLink(actionsNav: Element | null): void {
   actionsNav?.querySelector('a.action-btn[href*="complete=true"]')?.remove();
 }
-
 
 function moveShipButton(
   actionsNav: Element | null,
@@ -45,6 +43,68 @@ function moveShipButton(
   banner.appendChild(shipBtn);
 }
 
+function inlineDevlogComposer(
+  projectMain: Element,
+  actionsNav: Element | null,
+  feedSection: Element | null,
+): void {
+  if (!feedSection) return;
+  if (projectMain.querySelector(".su-inline-composer-shell")) return;
+
+  const postBtn = [...(actionsNav?.querySelectorAll(".action-btn") ?? [])].find(
+    (b) => b.textContent?.includes("Post a devlog"),
+  );
+  const modalMatch = postBtn
+    ?.getAttribute("onclick")
+    ?.match(/composer-modal-(\d+)/);
+  const modalId = modalMatch ? `composer-modal-${modalMatch[1]}` : null;
+
+  const composerDialog =
+    (modalId ? document.getElementById(modalId) : null) ??
+    [...document.querySelectorAll(".composer-modal")].find((d) =>
+      isDevlogComposer(d.querySelector(".feed-composer")),
+    ) ??
+    null;
+
+  const composerSection =
+    composerDialog?.querySelector<Element>(".feed-composer") ??
+    [...projectMain.querySelectorAll(".feed-composer")].find(
+      isDevlogComposer,
+    ) ??
+    null;
+
+  if (!composerSection) return;
+  if (composerSection.getAttribute("data-su-inline-composer") === "true")
+    return;
+
+  composerSection.querySelector(".feed-composer__chips")?.remove();
+  composerSection.setAttribute("data-su-inline-composer", "true");
+  composerSection.classList.add("su-inline-composer");
+
+  const shell = document.createElement("section");
+  shell.className = "sd-shell";
+
+  const header = document.createElement("div");
+  header.className = "sd-header";
+
+  const title = document.createElement("h2");
+  title.className = "sd-title";
+  title.textContent = "Post a devlog";
+
+  header.appendChild(title);
+  shell.appendChild(header);
+  shell.appendChild(composerSection);
+
+  feedSection.parentNode?.insertBefore(shell, feedSection);
+
+  if (composerDialog) {
+    composerDialog.removeAttribute("open");
+    composerDialog.setAttribute("hidden", "hidden");
+    composerDialog.setAttribute("aria-hidden", "true");
+    (composerDialog as HTMLElement).style.display = "none";
+    document.body.appendChild(composerDialog);
+  }
+}
 
 export function enhanceProjectPage(): void {
   const projectMain = document.querySelector(".app-layout__main");
@@ -58,6 +118,7 @@ export function enhanceProjectPage(): void {
 
   removeCompleteInfoLink(actionsNav);
   moveShipButton(actionsNav, heroBanner);
+  inlineDevlogComposer(projectMain, actionsNav, feedSection)
 
   actionsNav?.remove();
 }
