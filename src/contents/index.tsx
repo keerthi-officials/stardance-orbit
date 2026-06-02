@@ -1,15 +1,10 @@
-import { useEffect } from "react";
-import { enhanceShopCards } from "./overlay";
-import { enhanceCategories } from "./categories";
-import { enhanceShopLayout } from "./shop-layout";
+import type {PlasmoCSConfig} from "plasmo";
+import { bootstrap } from "../lib/sync";
+import "~style.css";
 
-export default function Overlay() {
-  useEffect(() => {
-    enhanceShopCards();
-    enhanceShopLayout();
-    enhanceCategories();
-  }, []);
+export const config: PlasmoCSConfig = {
+  matches: ["https://stardance.hackclub.com/*"],
+  run_at: "document_idle",
+};
 
-  return null;
-}
-    
+bootstrap();
