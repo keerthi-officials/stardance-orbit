@@ -118,7 +118,7 @@ export function enhanceProjectPage(): void {
 
   removeCompleteInfoLink(actionsNav);
   moveShipButton(actionsNav, heroBanner);
-  inlineDevlogComposer(projectMain, actionsNav, feedSection)
+  inlineDevlogComposer(projectMain, actionsNav, feedSection);
 
   actionsNav?.remove();
 }

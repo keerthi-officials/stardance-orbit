@@ -168,6 +168,7 @@ const SHOP_CSS = `
 }
 
 .shop-item-card__image-wrap {
+  border: none !important;
   display: flex !important;
   align-items: center;
   justify-content: center;
