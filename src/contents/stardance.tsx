@@ -14,7 +14,7 @@ function StardanceContent() {
           background: "#1c1c1f",
           color: "#f0eeeb",
           padding: "10px 16px",
-          borderRadius: "999px",  
+          borderRadius: "999px",
           fontSize: "14px",
           fontWeight: 600,
         }}
