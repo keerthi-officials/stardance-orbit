@@ -453,7 +453,10 @@ const SHOP_CSS = `
   margin-bottom: 2rem;
 }
 
-.sd-goals__header {
+.sd-goals__toprow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 1rem;
 }
 
@@ -462,6 +465,122 @@ const SHOP_CSS = `
   font-weight: 800;
   color: #fff;
   letter-spacing: -.02em;
+}
+
+/* ── Actual / Projected tabs ── */
+
+.sd-goals__tabs {
+  display: flex;
+  gap: 2px;
+  background: rgba(255,255,255,.08);
+  border-radius: 10px;
+  padding: 3px;
+}
+
+.sd-goals__tab {
+  padding: 5px 14px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: rgba(255,255,255,.5);
+  font-size: .8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .15s ease, color .15s ease;
+}
+
+.sd-goals__tab--active {
+  background: white;
+  color: #111827;
+}
+
+.sd-goals__tab--disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+}
+
+/* ── Cumulative / Individual toggle ── */
+
+.sd-goals__cumtabs {
+  display: flex;
+  justify-content: flex-end;
+  gap: 2px;
+  background: rgba(255,255,255,.08);
+  border-radius: 10px;
+  padding: 3px;
+  width: fit-content;
+  margin-left: auto;
+  margin-bottom: 1rem;
+}
+
+.sd-goals__cumtab {
+  padding: 5px 14px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: rgba(255,255,255,.5);
+  font-size: .8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .15s ease, color .15s ease;
+}
+
+.sd-goals__cumtab--active {
+  background: white;
+  color: #111827;
+}
+
+/* ── Accordion ── */
+
+.sd-goals__accordion {
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.sd-goals__accordion-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .75rem 1rem;
+  background: rgba(255,255,255,.05);
+  border: none;
+  color: #fff;
+  font-size: .95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .15s ease;
+  letter-spacing: -.01em;
+}
+
+.sd-goals__accordion-header:hover {
+  background: rgba(255,255,255,.09);
+}
+
+.sd-goals__accordion-arrow {
+  font-size: .7rem;
+  opacity: .6;
+  transition: transform .25s ease;
+}
+
+.sd-goals__accordion-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .1s cubic-bezier(0.4, 0, 0.2, 1),
+              padding .1s ease;
+  padding: 0 .75rem;
+}
+
+.sd-goals__accordion--open .sd-goals__accordion-body {
+  max-height: 2000px;
+  padding: .75rem;
+}
+
+.sd-goals__accordion .sd-goals__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: .75rem;
 }
 
 /* ── Chip row ── */

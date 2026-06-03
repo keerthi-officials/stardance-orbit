@@ -4,6 +4,8 @@ const ORDERS_BTN_ID = "sd-orders-btn";
 const STAR_STORAGE_PREFIX = "sd_wishlist_";
 const PROGRESS_ATTR = "data-sd-progress";
 const GOALS_PANEL_ID = "sd-goals-panel";
+const ACCORDION_KEY = "sd_goals_accordion";
+const GOALS_TAB_KEY = "sd_goals_tab";
 const STARDUST_PER_HOUR = 10;
 
 const STARDUST_ICON = `
@@ -431,18 +433,69 @@ function buildGoalItem(item: WishlistItem, balance: number): HTMLElement {
   return el;
 }
 
-function buildGoalsPanel(balance: number, items: WishlistItem[]): HTMLElement {
-  const totalCost = items.reduce((sum, i) => sum + i.price, 0);
+function buildTabBar(): HTMLElement {
+  const saved = localStorage.getItem(GOALS_TAB_KEY) ?? "actual";
 
-  const panel = document.createElement("div");
-  panel.id = GOALS_PANEL_ID;
-  panel.className = "sd-goals";
+  const wrap = document.createElement("div");
+  wrap.className = "sd-goals__tabs";
 
-  const header = document.createElement("div");
-  header.className = "sd-goals__header";
-  header.innerHTML = `<span class="sd-goals__title">⭐ My Goal Items</span>`;
+  const actual = document.createElement("button");
+ actual.className = "sd-goals__tab" + (saved === "actual" ? " sd-goals__tab--active" : "")
+  actual.dataset.tab = "actual"
+  actual.textContent = "Actual"
 
-  const summary = buildSummaryBar(balance, totalCost);
+  const projected = document.createElement("button");
+  projected.className = "sd-goals__tab sd-goals__tab--disabled"
+  projected.dataset.tab = "projected"
+  projected.textContent = "Projected"
+projected.disabled = true
+  projected.title = "Coming soon — will show balance including pending/in-progress hours"
+
+  wrap.appendChild(actual)
+  wrap.appendChild(projected);
+
+  return wrap;
+}
+
+function buildCumulativeToggle(): HTMLElement {
+  const saved = localStorage.getItem("sd_goals_cummode") ?? "cumulative";
+
+  const wrap = document.createElement("div");
+  wrap.className = "sd-goals__cumtabs";
+
+  ;(["cumulative", "individual"] as const).forEach((mode) => {
+    const btn = document.createElement("button");
+    btn.className =
+      "sd-goals__cumtab" + (saved === mode ? " sd-goals__cumtab--active" : "");
+    btn.dataset.mode = mode;
+    btn.textContent = mode.charAt(0).toUpperCase() + mode.slice(1);
+    btn.addEventListener("click", () => {
+      wrap
+        .querySelectorAll(".sd-goals__cumtab")
+        .forEach((b) => b.classList.remove("sd-goals__cumtab--active"));
+      btn.classList.add("sd-goals__cumtab--active");
+      localStorage.setItem("sd_goals_cummode", mode);
+    });
+    wrap.appendChild(btn);
+  });
+
+  return wrap;
+}
+
+function buildAccordion(items: WishlistItem[], balance: number): HTMLElement {
+  const saved = localStorage.getItem(ACCORDION_KEY);
+  const isOpen = saved === null ? true : saved === "open";
+
+  const wrap = document.createElement("div");
+  wrap.className =
+    "sd-goals__accordion" + (isOpen ? " sd-goals__accordion--open" : "");
+
+  const header = document.createElement("button");
+  header.className = "sd-goals__accordion-header";
+  header.innerHTML = `<span>Goal Items</span><span class="sd-goals__accordion-arrow">${isOpen ? "▲" : "▼"}</span>`;
+
+  const body = document.createElement("div");
+  body.className = "sd-goals__accordion-body";
 
   const grid = document.createElement("div");
   grid.className = "sd-goals__grid";
@@ -457,9 +510,44 @@ function buildGoalsPanel(balance: number, items: WishlistItem[]): HTMLElement {
     items.forEach((item) => grid.appendChild(buildGoalItem(item, balance)));
   }
 
-  panel.appendChild(header);
+  body.appendChild(grid);
+  wrap.appendChild(header);
+  wrap.appendChild(body);
+
+  header.addEventListener("click", () => {
+    const opening = !wrap.classList.contains("sd-goals__accordion--open");
+    wrap.classList.toggle("sd-goals__accordion--open", opening);
+    wrap.querySelector(".sd-goals__accordion-arrow")!.textContent = opening
+      ? "▲"
+      : "▼";
+    localStorage.setItem(ACCORDION_KEY, opening ? "open" : "closed");
+  });
+
+  return wrap;
+}
+
+function buildGoalsPanel(balance: number, items: WishlistItem[]): HTMLElement {
+  const totalCost = items.reduce((sum, i) => sum + i.price, 0);
+
+  const panel = document.createElement("div");
+  panel.id = GOALS_PANEL_ID;
+  panel.className = "sd-goals";
+
+  const topRow = document.createElement("div");
+  topRow.className = "sd-goals__toprow";
+  topRow.innerHTML = `<span class="sd-goals__title">⭐ My Goal Items</span>`;
+  topRow.appendChild(buildTabBar());
+
+  const summary = buildSummaryBar(balance, totalCost);
+
+  const cumToggle = buildCumulativeToggle();
+
+  const accordion = buildAccordion(items, balance);
+
+  panel.appendChild(topRow);
   panel.appendChild(summary);
-  panel.appendChild(grid);
+  panel.appendChild(cumToggle);
+  panel.appendChild(accordion);
 
   return panel;
 }
