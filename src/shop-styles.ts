@@ -370,6 +370,247 @@ const SHOP_CSS = `
     gap: 1rem !important;
   }
 }
+
+/* Goals panel */
+
+#sd-goals-panel {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 20px;
+  padding: 1.25rem 1.5rem 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.sd-goals__header {
+  margin-bottom: 1rem;
+}
+
+.sd-goals__title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -.02em;
+}
+
+/* ── Chip row ── */
+
+.sd-goals__chips {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: .75rem;
+  margin-bottom: 1rem;
+}
+
+.sd-goals__chip {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: .65rem .9rem;
+  border-radius: 12px;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.08);
+}
+
+.sd-goals__chip-label {
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  color: rgba(255,255,255,.4);
+  text-transform: uppercase;
+}
+
+.sd-goals__chip-value {
+  font-size: .95rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* ── Summary progress bar ── */
+
+.sd-goals__summary-track-wrap {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  margin-bottom: 1.25rem;
+}
+
+.sd-goals__summary-track {
+  flex: 1;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.1);
+  overflow: hidden;
+}
+
+.sd-goals__summary-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width .5s ease, background .5s ease;
+  min-width: 3px;
+}
+
+.sd-goals__summary-pct {
+  font-size: .8rem;
+  font-weight: 700;
+  color: rgba(255,255,255,.5);
+  white-space: nowrap;
+  min-width: 2.5rem;
+  text-align: right;
+}
+
+/* ── Items grid ── */
+
+.sd-goals__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: .75rem;
+}
+
+.sd-goals__item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: .85rem;
+  padding: .75rem;
+  border-radius: 14px;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.08);
+  transition: border-color .2s ease, background .2s ease;
+}
+
+.sd-goals__item:hover {
+  border-color: rgba(255,255,255,.18);
+  background: rgba(255,255,255,.08);
+}
+
+.sd-goals__img {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  border-radius: 10px;
+  background: rgba(255,255,255,.07);
+  flex-shrink: 0;
+  padding: 4px;
+}
+
+.sd-goals__info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.sd-goals__name {
+  font-size: .85rem;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+.sd-goals__name:hover {
+  text-decoration: underline;
+}
+
+.sd-goals__mini-track {
+  width: 100%;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.1);
+  overflow: hidden;
+}
+
+.sd-goals__mini-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width .4s ease;
+  min-width: 2px;
+}
+
+.sd-goals__item-status {
+  font-size: .72rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sd-goals__item-status strong {
+  font-weight: 800;
+}
+
+/* Remove button */
+
+.sd-goals__remove-wrap {
+  position: absolute;
+  top: .5rem;
+  right: .5rem;
+}
+
+.sd-goals__remove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.1);
+  border: none;
+  cursor: pointer;
+  font-size: .75rem;
+  color: rgba(255,255,255,.5);
+  line-height: 1;
+  padding: 0;
+  transition: background .15s ease, color .15s ease;
+}
+
+.sd-goals__remove:hover {
+  background: #fc5c65;
+  color: #fff;
+}
+
+.sd-goals__empty {
+  color: rgba(255,255,255,.4);
+  font-size: .875rem;
+  text-align: center;
+  padding: 1.5rem 0;
+  grid-column: 1 / -1;
+}
+
+/* ── Responsive ── */
+
+@media (max-width: 768px) {
+  .sd-goals__chips {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .sd-goals__chips {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .sd-goals__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sd-stardust-icon {
+  width: 14 px;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 0 4px;
+}
+
+.sd-progress__status strong,
+.sd-goals__chip-value {
+  align-items: center;
+  gap: 4px;
+}
 `;
 
 export function injectShopStyles(): void {

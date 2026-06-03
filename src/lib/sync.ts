@@ -1,5 +1,10 @@
-import { enhanceProjectPage } from "~contents/project";
-import { enhanceShopPage, enhanceShopItemCards } from "~contents/shop";
+import { enhanceProjectPage } from "~/contents/project";
+import {
+  enhanceShopPage,
+  enhanceShopItemCards,
+  enhanceGoalsPanel,
+} from "~/contents/shop";
+
 
 async function syncEnhancements(): Promise<void> {
   enhanceShopPage();
@@ -31,6 +36,8 @@ const WATCHED_SELECTORS = [
   ".shop-hub__topbar-right",
   ".sidebar__user-balance-amount",
   ".shop-item-card",
+  ".shop-goals__container",
+  ".shop-goals__items",
 ].join(", ");
 
 function mutationMatters(mutations: MutationRecord[]): boolean {
@@ -51,13 +58,15 @@ function mutationMatters(mutations: MutationRecord[]): boolean {
         el.classList?.contains("shop-hub") ||
         el.classList?.contains("shop-hub__topbar-right") ||
         el.classList?.contains("sidebar__user-balance-amount") ||
-        el.classList?.contains("shop-item-card")
+        el.classList?.contains("shop-item-card") ||
+        el.classList?.contains("shop-goals__container") ||
+        el.classList?.contains("shop-goals__items")
       ) {
         return true;
       }
 
       return Boolean(el.querySelector?.(WATCHED_SELECTORS));
-    })
+    }),
   );
 }
 
@@ -67,6 +76,7 @@ function watchBalanceText(): void {
 
   const textObserver = new MutationObserver(() => {
     enhanceShopItemCards();
+    enhanceGoalsPanel();
   });
 
   textObserver.observe(balanceEl, {
