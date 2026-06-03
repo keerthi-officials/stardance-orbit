@@ -221,6 +221,78 @@ const SHOP_CSS = `
   background: white !important;
   border: none !important;
   box-shadow: 0 2px 12px rgba(0,0,0,.15) !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: absolute !important;
+  transition:
+    transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.18s ease,
+    background 0.18s ease !important;
+}
+ 
+.shop-item-card__star:hover {
+  transform: scale(1.18) !important;
+  box-shadow: 0 4px 18px rgba(0,0,0,.22) !important;
+  background: #fffbe6 !important;
+}
+ 
+.shop-item-card__star:active {
+  transform: scale(0.88) !important;
+  transition: transform 0.08s ease !important;
+}
+ 
+.shop-item-card__star svg {
+  transition:
+    color 0.22s ease,
+    filter 0.22s ease,
+    transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+  color: #d1d5db !important;
+  pointer-events: none !important;
+}
+ 
+.shop-item-card__star.sd-star--active svg {
+  color: #FBBF24 !important;
+  filter: drop-shadow(0 0 5px rgba(251, 191, 36, 0.65)) !important;
+}
+ 
+@keyframes sd-star-pop {
+  0%   { transform: scale(1) rotate(0deg); }
+  30%  { transform: scale(1.5) rotate(-15deg); }
+  60%  { transform: scale(0.82) rotate(8deg); }
+  80%  { transform: scale(1.15) rotate(-3deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+ 
+.shop-item-card__star.sd-star--pop svg {
+  animation: sd-star-pop 0.42s cubic-bezier(0.34, 1.56, 0.64, 1) forwards !important;
+}
+ 
+/* Burst particles */
+
+.sd-burst {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  width: 0 !important;
+  height: 0 !important;
+  pointer-events: none !important;
+  z-index: 100 !important;
+}
+ 
+.sd-burst__p {
+  position: absolute !important;
+  width: 6px !important;
+  height: 6px !important;
+  border-radius: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  pointer-events: none !important;
+}
+ 
+@keyframes sd-burst-fade {
+  0%   { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(0.4); }
 }
 
 .shop-item-card__order-cta {
@@ -600,7 +672,7 @@ const SHOP_CSS = `
 }
 
 .sd-stardust-icon {
-  width: 14 px;
+  width: 14px;
   display: inline-block;
   vertical-align: middle;
   margin: 0 0 4px;

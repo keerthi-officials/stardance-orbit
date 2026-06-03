@@ -1,6 +1,7 @@
 import { injectShopStyles } from "~/shop-styles";
 
 const ORDERS_BTN_ID = "sd-orders-btn";
+const STAR_STORAGE_PREFIX = "sd_wishlist_";
 const PROGRESS_ATTR = "data-sd-progress";
 const GOALS_PANEL_ID = "sd-goals-panel";
 const STARDUST_PER_HOUR = 10;
@@ -21,6 +22,10 @@ export function enhanceShopPage(): void {
   reorderShopSections();
   enhanceShopItemCards();
   enhanceGoalsPanel();
+  enhanceWishlistStars()
+  enhanceGoalsRemoveButtons()
+
+  watchWishlistStars()
 }
 
 function addOrdersButton(): void {
@@ -94,6 +99,165 @@ function getProgressColor(balance: number, price: number): string {
 
 function formatHours(stardust: number): string {
   return `${(stardust / STARDUST_PER_HOUR).toFixed(1)}h`;
+}
+
+function getStarItemId(btn: HTMLElement): string | null {
+  const card = btn.closest<HTMLElement>("[data-shop-wishlist-item-id-value]");
+  return card?.getAttribute("data-shop-wishlist-item-id-value") ?? null;
+}
+
+function getStarSiteState(btn: HTMLElement): boolean {
+  const card = btn.closest<HTMLElement>("[data-shop-wishlist-wishlisted-value]");
+  return card?.getAttribute("data-shop-wishlist-wishlisted-value") === "true"
+}
+
+function starLoadState(itemId: string): boolean | null {
+  const val = localStorage.getItem(STAR_STORAGE_PREFIX + itemId)
+  if (val === null) return null
+  return val === "true"
+}
+
+function starSaveState(itemId: string, active: boolean): void {
+  localStorage.setItem(STAR_STORAGE_PREFIX + itemId, String(active))
+}
+
+function starApply(btn: HTMLElement, active: boolean, animate = false): void {
+  btn.classList.toggle("sd-star--active", active)
+
+  if (animate) {
+    btn.classList.remove("sd-star--pop")
+    void btn.offsetWidth
+    btn.classList.add("sd-star--pop")
+    setTimeout(() => btn.classList.remove("sd-star--pop"), 500)
+
+    if (active) starBurst(btn)
+  }
+}
+
+function starBurst(btn: HTMLElement): void {
+  btn.querySelectorAll(".sd-burst").forEach((el) => el.remove())
+
+  const container = document.createElement("div")
+  container.className = "sd-burst"
+  btn.appendChild(container)
+
+  const colors = ["#FBBF24", "#F59E0B", "#FDE68A", "#FB923C", "#A78BFA"];
+  const COUNT = 8
+
+  for (let i = 0; i < COUNT; i++) {
+    const angle = (360/ COUNT) * i + Math.random() * 15
+    const dist = 16 + Math.random() * 10
+    const rad = (angle * Math.PI) / 180
+    const tx = Math.cos(rad) * dist
+    const ty = Math.sin(rad) * dist
+    const delay = i * 20
+
+    const p = document.createElement("div")
+    p.className = "sd-burst__p"
+    p.style.cssText = `
+    background: ${colors[i % colors.length]};
+    animation: sd-burst-fade 0.45s ease-out ${delay}ms forwards;
+    `
+
+    container.appendChild(p)
+
+    const startTime = performance.now() + delay
+    const duration = 450
+
+    const tick = (now: number) => {
+      if (now < startTime) { requestAnimationFrame(tick); return }
+      const prog = Math.min((now - startTime) / duration, 1)
+      const eased = 1 - Math.pow(1 - prog, 2)
+      p.style.transform = `translate(calc(-50% + ${tx * eased}px), calc(-50% + ${ty * eased}px))`
+
+      if (prog < 1) requestAnimationFrame(tick)
+    }
+  requestAnimationFrame(tick)
+  }
+setTimeout(() => container.remove(), 700)
+}
+
+export function enhanceWishlistStars(): void {
+  if (!window.location.pathname.startsWith("/shop")) return;
+
+  document
+    .querySelectorAll<HTMLElement>(".shop-item-card__star")
+    .forEach((btn) => {
+      if (btn.dataset.sdStarInit) return;
+      btn.dataset.sdStarInit = "1";
+
+      const itemId = getStarItemId(btn);
+      if (!itemId) return;
+
+      let stored = starLoadState(itemId);
+      if (stored === null) {
+        stored = getStarSiteState(btn);
+        starSaveState(itemId, stored);
+      }
+      starApply(btn, stored);
+
+      btn.addEventListener("click", () => {
+        const current = starLoadState(itemId) ?? false;
+        const next = !current;
+
+        starSaveState(itemId, next);
+        starApply(btn, next, true);
+
+        if (window.location.pathname === "/shop") {
+          setTimeout(() => window.location.reload(), 350);
+        }
+      });
+    });
+}
+
+let _wishlistObserver: MutationObserver | null = null;
+
+function watchWishlistStars(): void {
+  _wishlistObserver?.disconnect();
+
+  _wishlistObserver = new MutationObserver(() => {
+    enhanceWishlistStars();
+    enhanceGoalsRemoveButtons();
+  });
+
+  _wishlistObserver.observe(document.body, {
+    childList: true,
+    subtree: true,
+  });
+}
+
+export function enhanceGoalsRemoveButtons(): void {
+  if (!window.location.pathname.startsWith("/shop")) return;
+
+  document
+    .querySelectorAll<HTMLElement>(".sd-goals__remove-wrap form")
+    .forEach((form) => {
+      if ((form as any)._sdPatched) return;
+      (form as any)._sdPatched = true;
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const action = form.getAttribute("action") ?? "";
+        const token =
+          (form.querySelector("[name=authenticity_token]") as HTMLInputElement)
+            ?.value ?? "";
+        const method =
+          (form.querySelector("[name=_method]") as HTMLInputElement)?.value ??
+          "post";
+
+        await fetch(action, {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams({
+            _method: method,
+            authenticity_token: token,
+          }),
+        });
+
+        window.location.reload();
+      });
+    });
 }
 
 interface WishlistItem {
