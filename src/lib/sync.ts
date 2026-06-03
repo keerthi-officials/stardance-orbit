@@ -1,5 +1,5 @@
 import { enhanceProjectPage } from "~contents/project";
-import { enhanceShopPage } from "~contents/shop";
+import { enhanceShopPage, enhanceShopItemCards } from "~contents/shop";
 
 async function syncEnhancements(): Promise<void> {
   enhanceShopPage();
@@ -29,6 +29,8 @@ const WATCHED_SELECTORS = [
   ".app-layout__main",
   ".shop-hub",
   ".shop-hub__topbar-right",
+  ".sidebar__user-balance-amount",
+  ".shop-item-card",
 ].join(", ");
 
 function mutationMatters(mutations: MutationRecord[]): boolean {
@@ -47,14 +49,31 @@ function mutationMatters(mutations: MutationRecord[]): boolean {
         el.classList?.contains("composer-modal") ||
         el.classList?.contains("app-layout__main") ||
         el.classList?.contains("shop-hub") ||
-        el.classList?.contains("shop-hub__topbar-right")
+        el.classList?.contains("shop-hub__topbar-right") ||
+        el.classList?.contains("sidebar__user-balance-amount") ||
+        el.classList?.contains("shop-item-card")
       ) {
         return true;
       }
 
       return Boolean(el.querySelector?.(WATCHED_SELECTORS));
-    }),
+    })
   );
+}
+
+function watchBalanceText(): void {
+  const balanceEl = document.querySelector(".sidebar__user-balance-amount");
+  if (!balanceEl) return;
+
+  const textObserver = new MutationObserver(() => {
+    enhanceShopItemCards();
+  });
+
+  textObserver.observe(balanceEl, {
+    characterData: true,
+    childList: true,
+    subtree: true,
+  });
 }
 
 const domObserver = new MutationObserver((mutations) => {
@@ -62,8 +81,10 @@ const domObserver = new MutationObserver((mutations) => {
 });
 
 export function bootstrap(): void {
-  const observe = () =>
+  const observe = () => {
     domObserver.observe(document.body, { childList: true, subtree: true });
+    watchBalanceText();
+  };
 
   if (document.body) {
     observe();

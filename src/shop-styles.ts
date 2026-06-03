@@ -275,6 +275,59 @@ const SHOP_CSS = `
   height: 22px !important;
 }
 
+/* Stardust progress bar */
+
+.sd-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+  margin-top: 12px;
+  padding: 12px;
+  background:#fdf6f0;
+  border-radius: 10px;
+  border: 1px solid #e2d8cc;
+}
+
+.sd-progress__track {
+  width: 100%;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.sd-progress__fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.4s ease, background 0.4s ease;
+  min-width: 2px;
+}
+
+.sd-progress__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.sd-progress__balance {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #9ca3af;
+  white-space: nowrap;
+}
+
+.sd-progress__status {
+  font-size: 0.78rem;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.sd-progress__status strong {
+  font-weight: 700;
+}
+
 /* Responsive */
 
 @media (max-width: 1000px) {
