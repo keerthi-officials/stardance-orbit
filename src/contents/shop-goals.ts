@@ -313,6 +313,7 @@ function buildSummaryBar(
   balance: number,
   totalCost: number,
   isProjected: boolean,
+  itemCount: number,
 ): HTMLElement {
   const pct = Math.min(100, totalCost > 0 ? (balance / totalCost) * 100 : 0);
   const color = isProjected ? "#818cf8" : getProgressColor(balance, totalCost);
@@ -334,17 +335,9 @@ function buildSummaryBar(
     return chip;
   };
 
+  chips.appendChild(makeChip("GOALS", `${itemCount}`));
   chips.appendChild(
-    makeChip(
-      "GOALS",
-      `${document.querySelectorAll(".shop-goals__item").length}`,
-    ),
-  );
-  chips.appendChild(
-    makeChip(
-      isProjected ? "PROJECTED" : "BALANCE",
-      `${STARDUST_ICON} ${balance.toLocaleString()}`,
-    ),
+    makeChip("BALANCE", `${STARDUST_ICON} ${balance.toLocaleString()}`),
   );
   chips.appendChild(
     makeChip(
@@ -535,7 +528,9 @@ function buildGoalsPanel(balance: number, items: WishlistItem[]): HTMLElement {
   topRow.innerHTML = `<span class="sd-goals__title">⭐ My Goal Items</span>`;
 
   const summaryWrap = document.createElement("div");
-  summaryWrap.appendChild(buildSummaryBar(balance, totalCost, false));
+  summaryWrap.appendChild(
+    buildSummaryBar(balance, totalCost, false, items.length),
+  );
 
   const projLoader = document.createElement("div");
   projLoader.className = "sd-goals__proj-loader";
@@ -557,7 +552,7 @@ function buildGoalsPanel(balance: number, items: WishlistItem[]): HTMLElement {
       if (projectedBalance !== null) {
         summaryWrap.innerHTML = "";
         summaryWrap.appendChild(
-          buildSummaryBar(projectedBalance, totalCost, true),
+          buildSummaryBar(projectedBalance, totalCost, true, items.length),
         );
         rerender(projectedBalance, currentMode, true);
       } else if (!isLoadingProjected) {
@@ -569,14 +564,16 @@ function buildGoalsPanel(balance: number, items: WishlistItem[]): HTMLElement {
           isLoadingProjected = false;
           summaryWrap.innerHTML = "";
           summaryWrap.appendChild(
-            buildSummaryBar(projectedBalance, totalCost, true),
+            buildSummaryBar(projectedBalance, totalCost, true, items.length),
           );
           rerender(projectedBalance, currentMode, true);
         });
       }
     } else {
       summaryWrap.innerHTML = "";
-      summaryWrap.appendChild(buildSummaryBar(balance, totalCost, false));
+      summaryWrap.appendChild(
+        buildSummaryBar(balance, totalCost, false, items.length),
+      );
       rerender(balance, currentMode, false);
     }
   }
