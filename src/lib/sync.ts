@@ -30,6 +30,7 @@ const WATCHED_SELECTORS = [
   ".project-show__actions",
   ".project-show__feed",
   ".project-show__banner",
+  ".project-show__info",
   ".composer-modal",
   ".app-layout__main",
   ".shop-hub",
@@ -38,6 +39,7 @@ const WATCHED_SELECTORS = [
   ".shop-item-card",
   ".shop-goals__container",
   ".shop-goals__items",
+  ".feed-post-card",
 ].join(", ");
 
 function mutationMatters(mutations: MutationRecord[]): boolean {
@@ -53,6 +55,7 @@ function mutationMatters(mutations: MutationRecord[]): boolean {
         el.classList?.contains("project-show__actions") ||
         el.classList?.contains("project-show__feed") ||
         el.classList?.contains("project-show__banner") ||
+        el.classList?.contains("project-show__info") ||
         el.classList?.contains("composer-modal") ||
         el.classList?.contains("app-layout__main") ||
         el.classList?.contains("shop-hub") ||
@@ -60,7 +63,8 @@ function mutationMatters(mutations: MutationRecord[]): boolean {
         el.classList?.contains("sidebar__user-balance-amount") ||
         el.classList?.contains("shop-item-card") ||
         el.classList?.contains("shop-goals__container") ||
-        el.classList?.contains("shop-goals__items")
+        el.classList?.contains("shop-goals__items") ||
+        el.classList?.contains("feed-post-card")
       ) {
         return true;
       }

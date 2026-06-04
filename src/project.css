@@ -37,6 +37,43 @@
   opacity: 0.9 !important;
 }
 
+/* Project page: Inline composer shell */
+
+.su-inline-composer-shell {
+  margin-bottom: 1.5rem;
+}
+
+.su-inline-composer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.su-inline-composer-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+  color: inherit;
+}
+
+.su-inline-composer {
+  border-radius: 0.5rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.su-hero-ship {
+  position: absolute !important;
+  top: 1rem !important;
+  right: 1rem !important;
+  margin: 0 !important;
+  z-index: 10;
+}
+
+/* Project page: Inline devlog editor*/
+
 .su-inline-edit {
   border-radius: 0.5rem;
   padding: 1rem;
@@ -53,4 +90,131 @@
 
 .su-inline-edit-card {
   width: 100%;
+}
+
+/* Stardust Projection Panel */
+
+#sd-projection {
+  margin: 1.25rem 0;
+  padding: 1.25rem 1.5rem 1.5rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Header */
+
+.sd-proj__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.sd-proj__title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+
+.sd-proj__subtitle {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 500;
+}
+
+/* Range estimate */
+
+.sd-proj__estimate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.sd-proj__range {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.04em;
+}
+
+.sd-proj__range-sep {
+  font-size: 1.4rem;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.sd-proj__icon {
+  width: 28px;
+  height: 28px;
+  margin-left: 4px;
+}
+
+.sd-stardust-icon {
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.sd-proj__mid-label {
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.sd-proj__mid-label strong {
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 700;
+}
+
+/* Overall quality bar */
+
+.sd-proj__overall-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.1rem;
+}
+
+.sd-proj__overall-track {
+  flex: 1;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.sd-proj__overall-fill {
+  height: 100%;
+  border-radius: 999px;
+  min-width: 2px;
+  transition: width 0.5s ease;
+}
+
+.sd-proj__overall-pct {
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* Disclaimer */
+
+.sd-proj__disclaimer {
+  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.25);
+  line-height: 1.5;
+  margin: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 0.75rem;
 }
