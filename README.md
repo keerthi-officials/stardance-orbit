@@ -22,8 +22,9 @@ A chrome extention that makes the current stardance site better by adding multip
   - stardust prediction depending on different factors(not too precise cuz of the originality factor)
 
 ## Installation
+
 **Load Unpacked**
-1. Download the extension files from releases
+1. Download the extension files from [releases](https://github.com/keerthi-officials/stardance-orbit/releases)
 2. Open Chrome and go to `chrome://extensions/`
 3. Enable "Developer mode" in the top right
 4. Click "Load unpacked"
