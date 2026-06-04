@@ -213,13 +213,19 @@ export function enhanceWishlistStars(): void {
 }
 
 let _wishlistObserver: MutationObserver | null = null;
+let _wishlistObserverBusy = false;
 
 function watchWishlistStars(): void {
   _wishlistObserver?.disconnect();
 
   _wishlistObserver = new MutationObserver(() => {
-    enhanceWishlistStars();
-    enhanceGoalsRemoveButtons();
+    if (_wishlistObserverBusy) return;
+    _wishlistObserverBusy = true;
+    requestAnimationFrame(() => {
+      enhanceWishlistStars();
+      enhanceGoalsRemoveButtons();
+      _wishlistObserverBusy = false;
+    });
   });
 
   _wishlistObserver.observe(document.body, {

@@ -56,6 +56,15 @@ function parseStardustNumber(text: string | null | undefined): number | null {
   return isNaN(n) ? null : n;
 }
 
+function getUserStardust(): number | null {
+  const el = document.querySelector(".sidebar__user-balance-amount");
+  if (!el) return null;
+  const raw = el.textContent?.replace(/[^\d.]/g, "").trim();
+  if (!raw) return null;
+  const n = parseFloat(raw);
+  return isNaN(n) ? null : n;
+}
+
 function scoreSignals(signals: ProjectSignals): FactorScore[] {
   const { devlogCount, devlogsWithMedia, hasDemo, hasGithub } = signals;
   const mediaRatio = devlogCount > 0 ? devlogsWithMedia / devlogCount : 0;
@@ -239,7 +248,9 @@ function renderMiniBar(
   isProjected: boolean,
 ): void {
   fill.style.width = `${pct}%`;
-  fill.style.background = "#f4ebb9";
+  fill.style.background = isProjected
+    ? `linear-gradient(90deg, ${color}, #818cf8)`
+    : color;
   fill.style.opacity = isProjected ? "0.85" : "1";
 }
 
@@ -337,7 +348,10 @@ function buildSummaryBar(
 
   chips.appendChild(makeChip("GOALS", `${itemCount}`));
   chips.appendChild(
-    makeChip("BALANCE", `${STARDUST_ICON} ${balance.toLocaleString()}`),
+    makeChip(
+      isProjected ? "PROJECTED" : "BALANCE",
+      `${STARDUST_ICON} ${balance.toLocaleString()}`,
+    ),
   );
   chips.appendChild(
     makeChip(
@@ -689,21 +703,27 @@ export function enhanceGoalsRemoveButtons(): void {
 }
 
 function waitForBalanceForGoals(): void {
+  let settled = false;
+
   const observer = new MutationObserver(() => {
+    if (settled) return;
     const balance = getUserStardust();
     if (balance === null) return;
+    settled = true;
     observer.disconnect();
     enhanceGoalsPanel();
   });
-  observer.observe(document.body, { childList: true, subtree: true });
-  setTimeout(() => observer.disconnect(), 10_000);
-}
 
-function getUserStardust(): number | null {
-  const el = document.querySelector(".sidebar__user-balance-amount");
-  if (!el) return null;
-  const raw = el.textContent?.replace(/[^\d.]/g, "").trim();
-  if (!raw) return null;
-  const n = parseFloat(raw);
-  return isNaN(n) ? null : n;
+  observer.observe(
+    document.querySelector(".sidebar__user-balance-amount") ?? document.body,
+    {
+      characterData: true,
+      childList: true,
+      subtree: true,
+    },
+  );
+
+  setTimeout(() => {
+    if (!settled) observer.disconnect();
+  }, 10_000);
 }

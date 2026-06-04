@@ -5,10 +5,17 @@ import {
   enhanceGoalsPanel,
 } from "~/contents/shop";
 
+let _syncing = false;
 
 async function syncEnhancements(): Promise<void> {
-  enhanceShopPage();
-  enhanceProjectPage();
+  if (_syncing) return;
+  _syncing = true;
+  try {
+    enhanceShopPage();
+    enhanceProjectPage();
+  } finally {
+    _syncing = false;
+  }
 }
 
 let syncScheduled = false;
@@ -42,11 +49,90 @@ const WATCHED_SELECTORS = [
   ".feed-post-card",
 ].join(", ");
 
+const SD_OWN_CLASSES = new Set([
+  "sd-progress",
+  "sd-progress__track",
+  "sd-progress__fill",
+  "sd-progress__row",
+  "sd-progress__balance",
+  "sd-progress__status",
+  "sd-goals",
+  "sd-goals__summary",
+  "sd-goals__chips",
+  "sd-goals__chip",
+  "sd-goals__grid",
+  "sd-goals__item",
+  "sd-goals__info",
+  "sd-goals__name",
+  "sd-goals__mini-track",
+  "sd-goals__mini-fill",
+  "sd-goals__item-status",
+  "sd-goals__remove-wrap",
+  "sd-goals__remove",
+  "sd-goals__accordion",
+  "sd-goals__accordion-header",
+  "sd-goals__accordion-body",
+  "sd-goals__accordion-arrow",
+  "sd-goals__cumbar-wrap",
+  "sd-goals__cumbar-track",
+  "sd-goals__cumbar-seg",
+  "sd-goals__cumbar-fill",
+  "sd-goals__proj-loader",
+  "sd-goals__proj-loader-dot",
+  "sd-goals__tabs",
+  "sd-goals__tab",
+  "sd-goals__cumtabs",
+  "sd-goals__cumtab",
+  "sd-goals__cumtabs-wrap",
+  "sd-goals__toprow",
+  "sd-goals__title",
+  "sd-goals__summary-track-wrap",
+  "sd-goals__summary-track",
+  "sd-goals__summary-fill",
+  "sd-goals__summary-pct",
+  "sd-goals__empty",
+  "sd-goals__img",
+  "sd-burst",
+  "sd-burst__p",
+  "sd-proj",
+  "sd-proj__header",
+  "sd-proj__title",
+  "sd-proj__subtitle",
+  "sd-proj__estimate",
+  "sd-proj__range",
+  "sd-proj__mid-label",
+  "sd-proj__overall-bar",
+  "sd-proj__overall-track",
+  "sd-proj__overall-fill",
+  "sd-proj__disclaimer",
+  "sd-shell",
+  "sd-header",
+  "sd-title",
+]);
+
+const SD_OWN_IDS = new Set([
+  "sd-goals-panel",
+  "sd-projection",
+  "sd-orders-btn",
+  "sd-shop-style",
+  "sd-goals-style",
+]);
+
+function isOwnNode(el: Element): boolean {
+  if (el.id && SD_OWN_IDS.has(el.id)) return true;
+  for (const cls of Array.from(el.classList)) {
+    if (SD_OWN_CLASSES.has(cls)) return true;
+  }
+  return false;
+}
+
 function mutationMatters(mutations: MutationRecord[]): boolean {
   return mutations.some((mutation) =>
     [...mutation.addedNodes, ...mutation.removedNodes].some((node) => {
       if (node.nodeType !== Node.ELEMENT_NODE) return false;
       const el = node as Element;
+
+      if (isOwnNode(el)) return false;
 
       if (
         el.id === "settings-modal" ||
@@ -114,7 +200,6 @@ export function bootstrap(): void {
 
   window.addEventListener("turbo:load", scheduleSync);
   window.addEventListener("turbo:render", scheduleSync);
-
   window.addEventListener("pageshow", scheduleSync);
 
   scheduleSync();
