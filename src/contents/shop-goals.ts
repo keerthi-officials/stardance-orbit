@@ -452,7 +452,7 @@ function buildAccordion(
 }
 
 function buildTabBar(onSwitch: (tab: GoalsTab) => void): HTMLElement {
-    const saved = "actual" as GoalsTab;
+  const saved = "actual" as GoalsTab;
 
   const wrap = document.createElement("div");
   wrap.className = "sd-goals__tabs";

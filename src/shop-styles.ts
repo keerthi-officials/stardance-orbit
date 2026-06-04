@@ -152,62 +152,77 @@ const SHOP_CSS = `
 }
 
 .shop-hub__items-card {
-  flex: 0 0 320px !important;
+  flex: 0 0 280px !important;
 }
 
 .shop-item-card {
-  --card-bg: #ffffff !important;
+  --card-bg: transparent !important;
   --card-border: transparent !important;
-  background: #ffffff !important;
-  border: none !important;
-  border-radius: 18px !important;
+  background: rgba(255,255,255,.05) !important;
+  border: 1px solid rgba(255,255,255,.08) !important;
+  border-radius: 16px !important;
   overflow: hidden !important;
-  color: #111827 !important;
+  color: #fff !important;
   height: 100% !important;
-  box-shadow: 0 4px 20px rgba(0,0,0,.06) !important;
+  box-shadow: none !important;
+  transition: border-color .2s ease, background .2s ease !important;
+}
+
+.shop-item-card:hover {
+  border-color: rgba(255,255,255,.18) !important;
+  background: rgba(255,255,255,.08) !important;
 }
 
 .shop-item-card__image-wrap {
   border: none !important;
+  border-bottom: 1px solid rgba(255,255,255,.07) !important;
   display: flex !important;
-  align-items: center;
-  justify-content: center;
-  height: 240px !important;
-  padding: 20px;
-  background: #f8fafc;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 180px !important;
+  padding: 20px !important;
+  background: rgba(255,255,255,.04) !important;
 }
 
 .shop-item-card__image {
-  max-width: 100%;
-  max-height: 180px;
+  max-width: 100% !important;
+  max-height: 140px !important;
   object-fit: contain !important;
+  opacity: .92 !important;
 }
 
 .shop-item-card__body {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 18px;
-  flex: 1;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  padding: 14px !important;
+  flex: 1 !important;
 }
 
 .shop-item-card__title {
-  color: #111827 !important;
-  font-size: 1.1rem !important;
-  line-height: 1.3 !important;
+  color: #fff !important;
+  font-size: .9rem !important;
+  line-height: 1.35 !important;
   font-weight: 700 !important;
   margin: 0 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
 }
 
 .shop-item-card__description {
-  color: #6b7280 !important;
-  font-size: .92rem !important;
+  color: rgba(255,255,255,.45) !important;
+  font-size: .78rem !important;
   line-height: 1.5 !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
 }
 
 .shop-item-card__hours {
-  color: #475569 !important;
-  font-size: .9rem !important;
+  color: rgba(255,255,255,.4) !important;
+  font-size: .75rem !important;
   font-weight: 600 !important;
 }
 
@@ -300,12 +315,33 @@ const SHOP_CSS = `
 .shop-item-card__order-cta {
   margin-top: auto !important;
   width: 100% !important;
-  border-radius: 12px !important;
+  border-radius: 10px !important;
+  background: rgba(255,255,255,.1) !important;
+  border: 1px solid rgba(255,255,255,.12) !important;
+  color: #fff !important;
+  font-weight: 700 !important;
+  font-size: .82rem !important;
+  transition: background .15s ease !important;
+}
+
+.shop-item-card__order-cta:hover {
+  background: rgba(255,255,255,.16) !important;
 }
 
 .shop-hub__items-grid,
 .shop-hub__items-list {
-  gap: 20px !important;
+  gap: 16px !important;
+}
+
+.shop-item-card__order-cta:disabled,
+.shop-item-card__order-cta[disabled],
+.shop-item-card__order-cta[aria-disabled="true"] {
+  cursor: not-allowed !important;
+  opacity: .35 !important;
+  background: rgba(255,255,255,.05) !important;
+  border-color: rgba(255,255,255,.08) !important;
+  color: rgba(255,255,255,.4) !important;
+  pointer-events: auto !important;
 }
 
 /* Scroll arrows */
@@ -358,16 +394,35 @@ const SHOP_CSS = `
   margin-bottom: 12px;
   margin-top: 12px;
   padding: 12px;
-  background:#fdf6f0;
+  background: rgba(255,255,255,.05);
   border-radius: 10px;
-  border: 1px solid #e2d8cc;
+  border: 1px solid rgba(255,255,255,.08);
+}
+
+.sd-progress__balance {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: rgba(255,255,255,.4);
+  white-space: nowrap;
+}
+
+.sd-progress__status {
+  font-size: 0.78rem;
+  text-align: right;
+  white-space: nowrap;
+  color: rgba(255,255,255,.55);
+}
+
+.sd-progress__status strong {
+  font-weight: 700;
+  color: #fff;
 }
 
 .sd-progress__track {
   width: 100%;
   height: 6px;
   border-radius: 999px;
-  background: rgba(0, 0, 0, 0.08);
+  background: rgba(255,255,255,.1);
   overflow: hidden;
 }
 
@@ -383,23 +438,6 @@ const SHOP_CSS = `
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-}
-
-.sd-progress__balance {
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: #9ca3af;
-  white-space: nowrap;
-}
-
-.sd-progress__status {
-  font-size: 0.78rem;
-  text-align: right;
-  white-space: nowrap;
-}
-
-.sd-progress__status strong {
-  font-weight: 700;
 }
 
 /* Shared stardust icon */
