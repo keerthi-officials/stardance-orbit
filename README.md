@@ -1,5 +1,5 @@
 # Stardance Orbit
-A chrome extention that makes the current stardance site better by adding multiple features and improving UI/UX.
+A chrome extension that makes the current stardance site better by adding multiple features and improving UI/UX.
 
 ## Features
 
