@@ -166,25 +166,23 @@ html.sd-orbit-theme-catppuccin-latte .shop-hub__category-link {
   ) !important;
 }
 
-html.sd-orbit-theme-catppuccin-latte .action-btn,
-
-html.sd-orbit-theme-catppuccin-latte .action-btn--primary {
+html.sd-orbit-theme-catppuccin-latte .shop-item-card__order-cta.action-btn--primary {
   background: #8839ef !important;
   color: white !important;
 }
 
-html.sd-orbit-theme-catppuccin-latte .action-btn--primary.action-btn--disabled {
+html.sd-orbit-theme-catppuccin-latte .shop-item-card__order-cta.action-btn--primary.action-btn--disabled {
   background: #94a3b8 !important;
   color: #f8fafc !important;
   opacity: 1 !important;
   cursor: not-allowed !important;
 }
 
-html.sd-orbit-theme-catppuccin-latte .action-btn__label {
+html.sd-orbit-theme-catppuccin-latte .shop-item-card__order-cta .action-btn__label {
   color: inherit !important;
 }
 
-html.sd-orbit-theme-catppuccin-latte .action-btn--primary:not(.action-btn--disabled):hover {
+html.sd-orbit-theme-catppuccin-latte .shop-item-card__order-cta.action-btn--primary:not(.action-btn--disabled):hover {
   background: #7729dd !important;
 }
 
