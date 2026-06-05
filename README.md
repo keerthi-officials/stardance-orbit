@@ -20,6 +20,8 @@ A chrome extension that makes the current stardance site better by adding multip
   - added ship button to the top
   - added inline devloging without needing to open a modal
   - stardust prediction depending on different factors(not too precise cuz of the originality factor)
+  - inline devlog editing. instead of redirecting to another page
+- added two themes, dark mode and light mode.
 
 ## Installation
 
