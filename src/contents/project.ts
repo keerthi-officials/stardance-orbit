@@ -121,6 +121,91 @@ function inlineDevlogComposer(
   }
 }
 
+async function mountInlineEditor(editLink: Element): Promise<void> {
+  const href = editLink.getAttribute("href");
+  if (!href) return;
+
+  const host =
+    editLink.closest(
+      "article.feed-post-card, article, li, .feed-item, .feed-card, section",
+    ) ?? editLink.parentElement;
+
+  if (!host?.parentNode) {
+    window.location.href = href;
+    return;
+  }
+
+  const existing = host.parentNode.querySelector(
+    `[data-su-inline-edit-for="${href}"]`,
+  );
+  if (existing) {
+    const origId = existing.getAttribute("data-su-inline-edit-host-id");
+    const orig = origId ? document.getElementById(origId) : null;
+    orig ? existing.replaceWith(orig) : existing.remove();
+    return;
+  }
+
+  const wrapper = document.createElement("section");
+  wrapper.className = "su-inline-edit";
+  wrapper.setAttribute("data-su-inline-edit-for", href);
+  if (host.id) wrapper.setAttribute("data-su-inline-edit-host-id", host.id);
+  wrapper.textContent = "Loading editor…";
+  host.replaceWith(wrapper);
+
+  try {
+    const res = await fetch(href, { credentials: "same-origin" });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+    const doc = new DOMParser().parseFromString(await res.text(), "text/html");
+    const editCard = doc.querySelector(".devlog-edit__card");
+    if (!editCard) throw new Error("Edit UI not found");
+
+    wrapper.textContent = "";
+
+    const closeRow = document.createElement("div");
+    closeRow.className = "su-inline-edit-close-row";
+    const closeBtn = document.createElement("button");
+    closeBtn.type = "button";
+    closeBtn.className = "action-btn action-btn--small action-btn--secondary";
+    closeBtn.innerHTML = '<span class="action-btn__label">Close editor</span>';
+    closeBtn.addEventListener("click", () => wrapper.replaceWith(host));
+    closeRow.appendChild(closeBtn);
+
+    const imported = document.importNode(editCard, true);
+    imported.classList.add("su-inline-edit-card");
+
+    const cancelLink = imported.querySelector(
+      ".devlog-edit__actions a.action-btn",
+    );
+    if (cancelLink) {
+      cancelLink.setAttribute("href", "#");
+      cancelLink.addEventListener("click", (e) => {
+        e.preventDefault();
+        wrapper.replaceWith(host);
+      });
+    }
+
+    wrapper.appendChild(closeRow);
+    wrapper.appendChild(imported);
+  } catch {
+    wrapper.replaceWith(host);
+    window.location.href = href;
+  }
+}
+
+function enhanceInlineEditLinks(projectMain: Element): void {
+  projectMain
+    .querySelectorAll('a[href*="/devlogs/"][href$="/edit"]')
+    .forEach((link) => {
+      if (link.getAttribute("data-su-inline-edit-link") === "true") return;
+      link.setAttribute("data-su-inline-edit-link", "true");
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        mountInlineEditor(link);
+      });
+    });
+}
+
 function scrapeProjectSignals(): ProjectSignals | null {
   let hours = 0;
   let devlogCount = 0;
@@ -311,6 +396,7 @@ export function enhanceProjectPage(): void {
   removeCompleteInfoLink(actionsNav);
   moveShipButton(actionsNav, heroBanner);
   inlineDevlogComposer(projectMain, actionsNav, feedSection);
+  enhanceInlineEditLinks(projectMain);
   enhanceProjectionPanel();
 
   actionsNav?.remove();
