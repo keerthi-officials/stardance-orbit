@@ -9,6 +9,7 @@
     "postcss.config.js",
   ],
   "compilerOptions": {
+    "types": ["chrome"],
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "jsx": "react-jsx",

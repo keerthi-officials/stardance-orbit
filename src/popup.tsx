@@ -1,8 +1,40 @@
 import { useEffect, useState } from "react";
-import { Button } from "~components/ui/button";
 import "~/style.css";
+import { THEME_STORAGE_KEY, THEMES, type ThemeMeta } from "~themes";
 
 function Popup() {
+  const [activeTheme, setActiveTheme] = useState("rose-pine");
+
+  useEffect(() => {
+    chrome.storage.local.get(THEME_STORAGE_KEY, (result) => {
+      setActiveTheme(result[THEME_STORAGE_KEY] ?? "rose-pine");
+    });
+  }, []);
+
+  const handleThemeSelect = (theme: ThemeMeta) => {
+    setActiveTheme(theme.id);
+    chrome.storage.local.set({ [THEME_STORAGE_KEY]: theme.id });
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      const tabId = tabs[0]?.id;
+      if (!tabId) return;
+      chrome.scripting.executeScript({
+        target: { tabId },
+        func: (id: string, key: string) => {
+          localStorage.setItem(key, id);
+          const ALL = ["rose-pine"].map((t) => `sd-orbit-theme-${t}`);
+          document.documentElement.classList.remove(...ALL);
+          if (id !== "default") {
+            document.documentElement.classList.add(`sd-orbit-theme-${id}`);
+          }
+          window.dispatchEvent(
+            new CustomEvent("sd-orbit:set-theme", { detail: id }),
+          );
+        },
+        args: [theme.id, THEME_STORAGE_KEY],
+      });
+    });
+  };
+
   return (
     <div className="relative flex flex-col items-center text-background justify-center w-[350px] p-6 gap-6 bg-gradient-to-br from-[#1f1f2e] via-[#2b2b3c] to-[#1f1f2e]">
       <div className="flex flex-col items-center gap-2">
@@ -24,15 +56,49 @@ function Popup() {
         <span className="text-2xl font-bold text-background">
           Stardance Orbit
         </span>
-        <span className="text-muted-foreground text-center max-w-xs">
-          Enhances the Stardance site with a better shop layout, devlog tools,
-          and stardust tracking.
+        <div style={{ padding: "16px 20px 14px" }}>
+          <span className="text-muted-foreground text-center max-w-xs">
+            Enhances the Stardance site with a better shop layout, devlog tools,
+            and stardust tracking.
+          </span>
+        </div>
+        <p className="text-[10px] text-white/30 uppercase tracking-widest mb-2">
+          Theme
+        </p>
+        <div className="grid grid-cols-2 gap-2">
+          {THEMES.map((theme) => {
+            const isActive = activeTheme === theme.id;
+            return (
+              <button
+                key={theme.id}
+                onClick={() => handleThemeSelect(theme)}
+                className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl border text-left transition-all duration-150 cursor-pointer ${
+                  isActive
+                    ? "border-white/40 bg-white/10"
+                    : "border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08] hover:border-white/[0.16]"
+                }`}
+              >
+                <div className="w-7 h-7 rounded-lg overflow-hidden flex shrink-0 border border-white/10">
+                  <div
+                    className="h-full flex-1"
+                    style={{ background: theme.swatch[0] }}
+                  />
+                  <div
+                    className="h-full flex-1"
+                    style={{ background: theme.swatch[1] }}
+                  />
+                </div>
+                <span className="text-[12px] font-semibold text-white flex-1 truncate">
+                  {theme.label}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+        <span className="text-xs text-muted-foreground">
+          &copy; {new Date().getFullYear()} keerthi, stardance-orbit
         </span>
       </div>
-      // settings to be added here
-      <span className="text-xs text-muted-foreground">
-        &copy; {new Date().getFullYear()} keerthi, stardance-orbit
-      </span>
     </div>
   );
 }

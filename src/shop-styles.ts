@@ -158,19 +158,20 @@ const SHOP_CSS = `
 .shop-item-card {
   --card-bg: transparent !important;
   --card-border: transparent !important;
-  background: rgba(255,255,255,.05) !important;
+  background: var(--sd-surface) !important;
+  border-color: var(--sd-border) !important;
+  color: var(--sd-text) !important;
   border: 1px solid rgba(255,255,255,.08) !important;
   border-radius: 16px !important;
   overflow: hidden !important;
-  color: #fff !important;
   height: 100% !important;
   box-shadow: none !important;
   transition: border-color .2s ease, background .2s ease !important;
 }
 
 .shop-item-card:hover {
-  border-color: rgba(255,255,255,.18) !important;
-  background: rgba(255,255,255,.08) !important;
+  border-color: var(--sd-border-hover) !important;
+  background: var(--sd-surface-hover) !important;
 }
 
 .shop-item-card__image-wrap {
@@ -200,7 +201,7 @@ const SHOP_CSS = `
 }
 
 .shop-item-card__title {
-  color: #fff !important;
+  color: var(--sd-text) !important;  
   font-size: .9rem !important;
   line-height: 1.35 !important;
   font-weight: 700 !important;
@@ -211,7 +212,7 @@ const SHOP_CSS = `
 }
 
 .shop-item-card__description {
-  color: rgba(255,255,255,.45) !important;
+  color: var(--sd-text-muted) !important;
   font-size: .78rem !important;
   line-height: 1.5 !important;
   display: -webkit-box !important;
@@ -221,7 +222,7 @@ const SHOP_CSS = `
 }
 
 .shop-item-card__hours {
-  color: rgba(255,255,255,.4) !important;
+  color: var(--sd-text-faint) !important;
   font-size: .75rem !important;
   font-weight: 600 !important;
 }

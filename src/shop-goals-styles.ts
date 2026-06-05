@@ -1,6 +1,48 @@
 export const GOALS_STYLE_ID = "sd-goals-style";
 
 const GOALS_CSS = `
+.su-inline-composer,
+.su-inline-edit,
+#sd-projection,
+#sd-goals-panel {
+  background: var(--sd-surface) !important;
+  border: 1px solid var(--sd-border) !important;
+}
+
+.sd-proj__title,
+.sd-goals__title,
+.su-inline-composer-title {
+  color: var(--sd-title) !important;
+}
+
+.sd-proj__subtitle,
+.sd-proj__mid-label,
+.sd-goals__chip-label {
+  color: var(--sd-text-muted) !important;
+}
+
+.sd-proj__disclaimer {
+  color: var(--sd-text-faint) !important;
+  border-top-color: var(--sd-border) !important;
+}
+
+.sd-proj__estimate {
+  background: var(--sd-surface) !important;
+  border-color: var(--sd-border) !important;
+}
+
+.sd-proj__range,
+.sd-goals__chip-value,
+.sd-goals__name,
+.sd-goals__accordion-header {
+  color: var(--sd-text) !important;
+}
+
+.sd-proj__overall-track,
+.sd-goals__summary-track,
+.sd-goals__mini-track {
+  background: var(--sd-border) !important;
+}
 
 /* Goals panel wrapper */
 
