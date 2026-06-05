@@ -666,6 +666,8 @@ export function enhanceGoalsPanel(): void {
   const items = parseWishlistItems(balance);
   const panel = buildGoalsPanel(balance, items);
   container.replaceWith(panel);
+
+  enhanceGoalsRemoveButtons()
 }
 
 export function enhanceGoalsRemoveButtons(): void {
@@ -674,8 +676,8 @@ export function enhanceGoalsRemoveButtons(): void {
   document
     .querySelectorAll<HTMLElement>(".sd-goals__remove-wrap form")
     .forEach((form) => {
-      if ((form as any)._sdPatched) return;
-      (form as any)._sdPatched = true;
+      if (form.dataset.sdPatched) return;
+      form.dataset.sdPatched = "1";
 
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -688,6 +690,13 @@ export function enhanceGoalsRemoveButtons(): void {
           (form.querySelector("[name=_method]") as HTMLInputElement)?.value ??
           "post";
 
+        const goalItem = form.closest(".sd-goals__item");
+        const itemHref =
+          goalItem
+            ?.querySelector<HTMLAnchorElement>(".sd-goals__name")
+            ?.getAttribute("href") ?? "";
+        const itemId = itemHref.split("/").pop();
+
         await fetch(action, {
           method: "POST",
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -696,6 +705,10 @@ export function enhanceGoalsRemoveButtons(): void {
             authenticity_token: token,
           }),
         });
+
+        if (itemId) {
+          localStorage.setItem(`sd_wishlist_${itemId}`, "false");
+        }
 
         window.location.reload();
       });
