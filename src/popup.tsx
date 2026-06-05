@@ -98,7 +98,7 @@ function Popup() {
           })}
         </div>
         <span className="text-xs text-muted-foreground">
-          &copy; {new Date().getFullYear()} keerthi, stardance-orbit
+          &copy; {new Date().getFullYear()} keerthi, stardance orbit
         </span>
       </div>
     </div>

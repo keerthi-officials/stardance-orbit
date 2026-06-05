@@ -128,13 +128,63 @@ h6,
   font-family: "Comfortaa", "Palanquin Dark", "Poppins", sans-serif;
 }
 
-a.sidebar__logo {
+
+html.sd-orbit-theme-catppuccin-latte a.sidebar__logo {
   background-color: #212224 !important;
   border-radius: 8px !important;
   padding: 8px !important;
 }
 
-html:not(.dark):not([data-theme="dark"]) a.sidebar__logo,
-body:not(.dark) a.sidebar__logo {
-  background-color: #212224 !important;
+html.sd-orbit-theme-catppuccin-latte .sd-progress,
+html.sd-orbit-theme-catppuccin-latte .sd-progress {
+  background: rgba(15, 23, 42, 0.04) !important;
+  border: 1px solid #e2e8f0 !important;
+}
+
+html.sd-orbit-theme-catppuccin-latte .sd-progress__balance {
+  color: #64748b !important;
+}
+
+html.sd-orbit-theme-catppuccin-latte .sd-progress__status {
+  color: #475569 !important;
+}
+
+html.sd-orbit-theme-catppuccin-latte .sd-progress__status strong {
+  color: #0f172a !important;
+}
+
+html.sd-orbit-theme-catppuccin-latte .sd-progress__track {
+  background: #e2e8f0 !important;
+}
+
+html.sd-orbit-theme-catppuccin-latte .shop-hub__category-link,
+html.sd-orbit-theme-catppuccin-latte .shop-hub__category-link {
+  border-color: #212224 !important;
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.85),
+    rgba(248,250,252,0.7)
+  ) !important;
+}
+
+html.sd-orbit-theme-catppuccin-latte .action-btn,
+
+html.sd-orbit-theme-catppuccin-latte .action-btn--primary {
+  background: #3b82f6 !important;
+  color: white !important;
+}
+
+html.sd-orbit-theme-catppuccin-latte .action-btn--primary.action-btn--disabled {
+  background: #94a3b8 !important;
+  color: #f8fafc !important;
+  opacity: 1 !important;
+  cursor: not-allowed !important;
+}
+
+html.sd-orbit-theme-catppuccin-latte .action-btn__label {
+  color: inherit !important;
+}
+
+html.sd-orbit-theme-catppuccin-latte .action-btn--primary:not(.action-btn--disabled):hover {
+  background: #2563eb !important;
 }

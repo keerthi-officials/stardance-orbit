@@ -153,7 +153,6 @@ html.sd-orbit-theme-catppuccin-latte .sd-goals__cumtab--active {
 
 html.sd-orbit-theme-catppuccin-latte .sd-goals__chip {
   background: rgba(0, 0, 0, 0.04) !important;
-  border-color: var(--ctp-surface-1) !important;
 }
 
 html.sd-orbit-theme-catppuccin-latte .sd-goals__summary-pct,
@@ -189,8 +188,11 @@ html.sd-orbit-theme-catppuccin-latte .sd-goals__img {
 }
 
 html.sd-orbit-theme-catppuccin-latte .sd-goals__remove {
-  background: rgba(0, 0, 0, 0.08) !important;
   color: var(--ctp-subtext-0) !important;
+}
+
+html.sd-orbit-theme-catppuccin-latte .sd-goals__remove:hover {
+ color: #fff !important;
 }
 
 html.sd-orbit-theme-catppuccin-latte .sd-goals__empty {
