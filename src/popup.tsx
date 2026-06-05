@@ -21,7 +21,9 @@ function Popup() {
         target: { tabId },
         func: (id: string, key: string) => {
           localStorage.setItem(key, id);
-          const ALL = ["rose-pine"].map((t) => `sd-orbit-theme-${t}`);
+          const ALL = ["catppuccin-latte", "rose-pine"].map(
+            (t) => `sd-orbit-theme-${t}`,
+          );
           document.documentElement.classList.remove(...ALL);
           if (id !== "default") {
             document.documentElement.classList.add(`sd-orbit-theme-${id}`);

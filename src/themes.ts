@@ -1,5 +1,5 @@
 import rosePineCSS from "./themes/rose-pine.css?raw";
-import catppuccinLatteCSS from "./themes/catppucin-latte.css?raw";
+import catppuccinLatteCSS from "./themes/catppuccin-latte.css?raw";
 
 export const THEME_STORAGE_KEY = "sd-orbit-theme";
 export const THEME_STYLE_ID = "sd-orbit-theme-style";
@@ -24,12 +24,12 @@ export const THEMES: ThemeMeta[] = [
     swatch: ["#191724", "#c4a7e7"],
     css: rosePineCSS,
   },
-  /**{
+  {
     id: "catppuccin-latte",
     label: "Catppuccin Latte",
     swatch: ["#eff1f5", "#8839ef"],
     css: catppuccinLatteCSS,
-  }, */
+  },
 ];
 
 export function getThemeById(id: string): ThemeMeta {

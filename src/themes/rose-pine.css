@@ -103,4 +103,6 @@ html.sd-orbit-theme-rose-pine {
   --sd-text-muted: rgba(205, 214, 244, 0.5);
   --sd-text-faint: rgba(205, 214, 244, 0.25);
   --sd-title: #fff;
+  --sd-text-pct: #f4ebb9;
+  --sd-fill: #f4ebb9;
 }

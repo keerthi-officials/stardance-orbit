@@ -40,7 +40,8 @@
     --sd-text-muted: rgba(255, 255, 255, 0.5);
     --sd-text-faint: rgba(255, 255, 255, 0.25);
     --sd-title: #fff;
-
+    --sd-text-pct: #f4ebb9;
+    --sd-fill: #f4ebb9;
   }
 
   .dark {
@@ -77,6 +78,8 @@
     --sd-text-muted: rgba(255, 255, 255, 0.5);
     --sd-text-faint: rgba(255, 255, 255, 0.25);
     --sd-title: #fff;
+    --sd-text-pct: #f4ebb9;
+    --sd-fill: #f4ebb9;
   }
 }
 

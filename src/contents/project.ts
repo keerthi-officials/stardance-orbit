@@ -268,9 +268,9 @@ function buildProjectionPanel(
     </div>
     <div class="sd-proj__overall-bar">
       <div class="sd-proj__overall-track">
-        <div class="sd-proj__overall-fill" style="width:${Math.round(overallScore * 100)}%; background:${overallColor}"></div>
+        <div class="sd-proj__overall-fill" style="width:${Math.round(overallScore * 100)}%"></div>
       </div>
-      <span class="sd-proj__overall-pct" style="color:${overallColor}">${Math.round(overallScore * 100)}% quality score</span>
+      <span class="sd-proj__overall-pct">${Math.round(overallScore * 100)}% quality score</span>
     </div>
     <p class="sd-proj__disclaimer">Prediction is an estimate based on observable signals. Actual payout depends on how voters rate your project.</p>
   `;
