@@ -127,3 +127,14 @@ h6,
 .text-lg {
   font-family: "Comfortaa", "Palanquin Dark", "Poppins", sans-serif;
 }
+
+a.sidebar__logo {
+  background-color: #212224 !important;
+  border-radius: 8px !important;
+  padding: 8px !important;
+}
+
+html:not(.dark):not([data-theme="dark"]) a.sidebar__logo,
+body:not(.dark) a.sidebar__logo {
+  background-color: #212224 !important;
+}

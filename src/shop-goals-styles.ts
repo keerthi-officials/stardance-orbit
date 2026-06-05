@@ -1,54 +1,11 @@
 export const GOALS_STYLE_ID = "sd-goals-style";
 
 const GOALS_CSS = `
-.su-inline-composer,
-.su-inline-edit,
-#sd-projection,
-#sd-goals-panel {
-  background: var(--sd-surface) !important;
-  border: 1px solid var(--sd-border) !important;
-}
-
-.sd-proj__title,
-.sd-goals__title,
-.su-inline-composer-title {
-  color: var(--sd-title) !important;
-}
-
-.sd-proj__subtitle,
-.sd-proj__mid-label,
-.sd-goals__chip-label {
-  color: var(--sd-text-muted) !important;
-}
-
-.sd-proj__disclaimer {
-  color: var(--sd-text-faint) !important;
-  border-top-color: var(--sd-border) !important;
-}
-
-.sd-proj__estimate {
-  background: var(--sd-surface) !important;
-  border-color: var(--sd-border) !important;
-}
-
-.sd-proj__range,
-.sd-goals__chip-value,
-.sd-goals__name,
-.sd-goals__accordion-header {
-  color: var(--sd-text) !important;
-}
-
-.sd-proj__overall-track,
-.sd-goals__summary-track,
-.sd-goals__mini-track {
-  background: var(--sd-border) !important;
-}
-
 /* Goals panel wrapper */
 
 #sd-goals-panel {
-  background: rgba(255,255,255,.04);
-  border: 1px solid rgba(255,255,255,.1);
+  background: var(--sd-surface) !important;
+  border: 1px solid var(--sd-border) !important;
   border-radius: 20px;
   padding: 1.25rem 1.5rem 1.5rem;
   margin-bottom: 2rem;
@@ -66,7 +23,7 @@ const GOALS_CSS = `
 .sd-goals__title {
   font-size: 1.1rem;
   font-weight: 800;
-  color: #fff;
+  color: var(--sd-title) !important;
   letter-spacing: -.02em;
 }
 
@@ -125,14 +82,14 @@ const GOALS_CSS = `
   font-size: .65rem;
   font-weight: 700;
   letter-spacing: .08em;
-  color: rgba(255,255,255,.4);
+  color: var(--sd-text-muted) !important;
   text-transform: uppercase;
 }
 
 .sd-goals__chip-value {
   font-size: .95rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--sd-text) !important;
   display: flex;
   align-items: center;
   gap: 4px;
@@ -151,7 +108,7 @@ const GOALS_CSS = `
   flex: 1;
   height: 8px;
   border-radius: 999px;
-  background: rgba(255,255,255,.1);
+  background: var(--sd-border) !important;
   overflow: hidden;
 }
 
@@ -248,7 +205,7 @@ const GOALS_CSS = `
   padding: .75rem 1rem;
   background: rgba(255,255,255,.05);
   border: none;
-  color: #fff;
+  color: var(--sd-text) !important;
   font-size: .95rem;
   font-weight: 700;
   cursor: pointer;
@@ -329,7 +286,7 @@ const GOALS_CSS = `
 .sd-goals__name {
   font-size: .85rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--sd-text) !important;
   text-decoration: none;
   white-space: nowrap;
   overflow: hidden;
@@ -345,7 +302,7 @@ const GOALS_CSS = `
   width: 100%;
   height: 4px;
   border-radius: 999px;
-  background: rgba(255,255,255,.1);
+  background: var(--sd-border) !important;
   overflow: hidden;
 }
 

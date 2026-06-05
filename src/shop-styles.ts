@@ -138,7 +138,7 @@ const SHOP_CSS = `
   font-size: 1.35rem !important;
   font-weight: 800 !important;
   letter-spacing: -.03em;
-  color: white !important;
+  color: var(--sd-text) !important;
   text-align: center;
   text-shadow: 0 2px 12px rgba(0,0,0,.35);
 }

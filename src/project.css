@@ -31,6 +31,7 @@
   margin: 0 !important;
   z-index: 10;
   border-radius: 10px !important;
+  color: var(--sd-text) !important;
 }
 
 .action-btn:disabled, .action-btn--disabled {
