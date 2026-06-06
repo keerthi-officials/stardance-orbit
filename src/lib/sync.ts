@@ -4,6 +4,7 @@ import {
   enhanceShopItemCards,
   enhanceGoalsPanel,
 } from "~/contents/shop";
+import { enhanceHomeComposer } from "~contents/home";
 
 let _syncing = false;
 
@@ -13,6 +14,7 @@ async function syncEnhancements(): Promise<void> {
   try {
     enhanceShopPage();
     enhanceProjectPage();
+    enhanceHomeComposer()
   } finally {
     _syncing = false;
   }
@@ -47,6 +49,7 @@ const WATCHED_SELECTORS = [
   ".shop-goals__container",
   ".shop-goals__items",
   ".feed-post-card",
+  ".feed-composer",
 ].join(", ");
 
 const SD_OWN_CLASSES = new Set([
@@ -150,7 +153,8 @@ function mutationMatters(mutations: MutationRecord[]): boolean {
         el.classList?.contains("shop-item-card") ||
         el.classList?.contains("shop-goals__container") ||
         el.classList?.contains("shop-goals__items") ||
-        el.classList?.contains("feed-post-card")
+        el.classList?.contains("feed-post-card") ||
+        el.classList?.contains("feed-composer") 
       ) {
         return true;
       }

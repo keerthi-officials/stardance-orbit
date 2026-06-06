@@ -7,6 +7,40 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sd-template-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sd-template-label {
+  font-size: 12px;
+  opacity: 0.6;
+  white-space: nowrap;
+}
+
+.sd-template-select {
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--sd-border);
+  background: var(--sd-surface);
+  color: inherit;
+  cursor: pointer;
+  outline: none;
+}
+
+.sd-template-select option {
+  background: var(--ctp-base);
+  color: var(--sd-text);
+}
+
+.sd-template-wrap {
+  margin-left: auto;
 }
 
 .sd-title {

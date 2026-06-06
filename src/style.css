@@ -42,6 +42,7 @@
     --sd-title: #fff;
     --sd-text-pct: #f4ebb9;
     --sd-fill: #f4ebb9;
+    --ctp-base: #191724
   }
 
   .dark {
@@ -80,6 +81,7 @@
     --sd-title: #fff;
     --sd-text-pct: #f4ebb9;
     --sd-fill: #f4ebb9;
+    --ctp-base: #191724;
   }
 }
 

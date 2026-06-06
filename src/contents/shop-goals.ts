@@ -667,7 +667,7 @@ export function enhanceGoalsPanel(): void {
   const panel = buildGoalsPanel(balance, items);
   container.replaceWith(panel);
 
-  enhanceGoalsRemoveButtons()
+  enhanceGoalsRemoveButtons();
 }
 
 export function enhanceGoalsRemoveButtons(): void {
