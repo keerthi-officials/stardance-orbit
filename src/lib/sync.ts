@@ -7,6 +7,10 @@ import {
 import { enhanceHomeComposer } from "~contents/home";
 import { enhanceDistractionFree } from "~contents/focus";
 import { enhanceWordCount } from "~contents/word-count";
+import {
+  initCollapseDevlogs,
+  enhanceCollapseDevlogs,
+} from "~contents/collapse-devlogs";
 
 let _syncing = false;
 
@@ -19,6 +23,7 @@ async function syncEnhancements(): Promise<void> {
     enhanceHomeComposer();
     enhanceDistractionFree();
     enhanceWordCount();
+    enhanceCollapseDevlogs();
   } finally {
     _syncing = false;
   }
@@ -223,5 +228,6 @@ export function bootstrap(): void {
   window.addEventListener("turbo:render", scheduleSync);
   window.addEventListener("pageshow", scheduleSync);
 
+  initCollapseDevlogs();
   scheduleSync();
 }
