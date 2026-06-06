@@ -1,13 +1,15 @@
 {
   "name": "stardance-orbit",
   "displayName": "stardance-orbit",
-  "version": "0.0.1",
+  "version": "3.0.0",
   "description": "A Chrome extension for the stardance website",
   "author": "keerthi",
   "scripts": {
     "dev": "plasmo dev",
     "build": "plasmo build",
-    "package": "plasmo package"
+    "dev:web": "cd web && npm run dev",
+    "build:web": "cd web && npm run build",
+    "dev:all": "concurrently \"npm run dev\" \"npm run dev:web\""
   },
   "dependencies": {
     "@plasmohq/messaging": "^0.6.2",
@@ -52,6 +54,7 @@
     "@types/react": "18.2.48",
     "@types/react-dom": "18.2.18",
     "autoprefixer": "^10.4.21",
+    "concurrently": "^10.0.3",
     "path-browserify": "^1.0.0",
     "postcss": "8.4.33",
     "prettier": "3.2.4",
