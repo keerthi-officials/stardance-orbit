@@ -5,6 +5,7 @@ export const config = {
 };
 
 const NAV_SHORTCUTS = [
+  { keys: ["Alt", "K"], label: "Quick Search" },
   { keys: ["Alt", "H"], label: "Go to Home" },
   { keys: ["Alt", "P"], label: "Go to Projects" },
   { keys: ["Alt", "D"], label: "Go to Shop" },
