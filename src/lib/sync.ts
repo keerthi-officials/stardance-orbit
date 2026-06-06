@@ -13,6 +13,7 @@ import {
 } from "~contents/collapse-devlogs";
 import { initProjectView, enhanceProjectView } from "~contents/project-view";
 import { initShortcuts } from "~contents/shortcuts";
+import { enhanceDraftSave } from "~contents/draft-save";
 
 let _syncing = false;
 
@@ -27,6 +28,7 @@ async function syncEnhancements(): Promise<void> {
     enhanceWordCount();
     enhanceCollapseDevlogs();
     enhanceProjectView();
+    enhanceDraftSave();
   } finally {
     _syncing = false;
   }
@@ -129,6 +131,9 @@ const SD_OWN_CLASSES = new Set([
   "sd-title",
   "sd-df-btn",
   "sd-wc-badge",
+  "sd-draft-banner",
+  "sd-draft-banner__actions",
+  "sd-draft-banner__btn",
 ]);
 
 const SD_OWN_IDS = new Set([
@@ -141,6 +146,8 @@ const SD_OWN_IDS = new Set([
   "sd-df-style",
   "sd-wc-composer",
   "sd-wc-style",
+  "sd-draft-style",
+  "sd-draft-status",
 ]);
 
 function isOwnNode(el: Element): boolean {
