@@ -89,7 +89,7 @@ function Popup() {
                 Collapse devlogs
               </span>
               <span className="text-[11px] text-white/35 leading-tight">
-                Show 3 lines · tap card to expand
+                Show 3 lines · tap show more to expand
               </span>
             </div>
             <Switch
