@@ -1,0 +1,38 @@
+html.sd-orbit-theme-high-contrast {
+  color-scheme: dark;
+  --color-bg: #000000;
+  --color-bg-2: #0a0a0a;
+  --color-body-text: #ffffff;
+  --color-text-body: #ffffff;
+  --color-text-header: #ffffff;
+  --color-text-muted: #aaaaaa;
+  --color-space-bg: #000000;
+  --color-space-bg-2: #0a0a0a;
+  --color-space-surface: #161616;
+  --color-space-border: #444444;
+  --color-space-text: #ffffff;
+  --color-space-text-muted: rgba(255,255,255,0.6);
+  --color-space-card: rgba(10,10,10,0.98);
+  --color-space-accent: #ffff00;
+  --color-space-accent-soft: rgba(255,255,0,0.15);
+  --color-brand-highlight: #ffff00;
+  --color-brand-highlight-faint: rgba(255,255,0,0.1);
+  --color-brand-highlight-soft: rgba(255,255,0,0.22);
+  --color-overlay-light: rgba(255,255,255,0.08);
+  --color-overlay-light-soft: rgba(255,255,255,0.04);
+  --color-set-1-bg: #000000;
+  --color-set-2-bg: #0a0a0a;
+  --color-set-3-bg: #111111;
+  --color-set-4-bg: #1a1a1a;
+  --shadow: 0 0 0 2px rgba(255,255,0,0.3);
+  --sd-surface: rgba(255,255,255,0.06);
+  --sd-surface-hover: rgba(255,255,255,0.12);
+  --sd-border: rgba(255,255,255,0.25);
+  --sd-border-hover: rgba(255,255,255,0.5);
+  --sd-text: #ffffff;
+  --sd-text-muted: rgba(255,255,255,0.65);
+  --sd-text-faint: rgba(255,255,255,0.35);
+  --sd-title: #ffffff;
+  --sd-text-pct: #ffff00;
+  --sd-fill: #ffff00;
+}

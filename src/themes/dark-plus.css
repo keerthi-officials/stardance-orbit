@@ -1,0 +1,38 @@
+html.sd-orbit-theme-dark-plus {
+  color-scheme: dark;
+  --color-bg: #0d0d0d;
+  --color-bg-2: #111111;
+  --color-body-text: #e8e8e8;
+  --color-text-body: #e8e8e8;
+  --color-text-header: #ffffff;
+  --color-text-muted: #888888;
+  --color-space-bg: #0d0d0d;
+  --color-space-bg-2: #111111;
+  --color-space-surface: #1a1a1a;
+  --color-space-border: #2a2a2a;
+  --color-space-text: #e8e8e8;
+  --color-space-text-muted: rgba(200,200,200,0.5);
+  --color-space-card: rgba(20,20,20,0.95);
+  --color-space-accent: #6366f1;
+  --color-space-accent-soft: rgba(99,102,241,0.15);
+  --color-brand-highlight: #6366f1;
+  --color-brand-highlight-faint: rgba(99,102,241,0.1);
+  --color-brand-highlight-soft: rgba(99,102,241,0.2);
+  --color-overlay-light: rgba(255,255,255,0.06);
+  --color-overlay-light-soft: rgba(255,255,255,0.03);
+  --color-set-1-bg: #080808;
+  --color-set-2-bg: #0d0d0d;
+  --color-set-3-bg: #111111;
+  --color-set-4-bg: #1a1a1a;
+  --shadow: 0 0 2px 1px rgba(0,0,0,0.6);
+  --sd-surface: rgba(255,255,255,0.04);
+  --sd-surface-hover: rgba(255,255,255,0.08);
+  --sd-border: rgba(255,255,255,0.08);
+  --sd-border-hover: rgba(255,255,255,0.18);
+  --sd-text: #e8e8e8;
+  --sd-text-muted: rgba(232,232,232,0.5);
+  --sd-text-faint: rgba(232,232,232,0.25);
+  --sd-title: #ffffff;
+  --sd-text-pct: #6366f1;
+  --sd-fill: #6366f1;
+}

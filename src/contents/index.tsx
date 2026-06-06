@@ -1,6 +1,7 @@
 import type { PlasmoCSConfig } from "plasmo";
 import { bootstrap } from "../lib/sync";
 import { applyStoredTheme } from "~themes";
+import { applyStoredFontSettings } from "~font-customizer";
 import "~style.css";
 import "~project.css";
 
@@ -10,4 +11,5 @@ export const config: PlasmoCSConfig = {
 };
 
 applyStoredTheme();
+applyStoredFontSettings();
 bootstrap();
