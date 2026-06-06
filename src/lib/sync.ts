@@ -11,6 +11,7 @@ import {
   initCollapseDevlogs,
   enhanceCollapseDevlogs,
 } from "~contents/collapse-devlogs";
+import { initProjectView, enhanceProjectView } from "~contents/project-view";
 
 let _syncing = false;
 
@@ -24,6 +25,7 @@ async function syncEnhancements(): Promise<void> {
     enhanceDistractionFree();
     enhanceWordCount();
     enhanceCollapseDevlogs();
+    enhanceProjectView();
   } finally {
     _syncing = false;
   }
@@ -62,7 +64,7 @@ const WATCHED_SELECTORS = [
   ".sd-header",
   "#sd-df-home-bar",
   ".feed-home",
-  ".feed-home__frame"
+  ".feed-home__frame",
 ].join(", ");
 
 const SD_OWN_CLASSES = new Set([
@@ -125,7 +127,7 @@ const SD_OWN_CLASSES = new Set([
   "sd-header",
   "sd-title",
   "sd-df-btn",
-  "sd-wc-badge"
+  "sd-wc-badge",
 ]);
 
 const SD_OWN_IDS = new Set([
@@ -137,7 +139,7 @@ const SD_OWN_IDS = new Set([
   "sd-df-home-bar",
   "sd-df-style",
   "sd-wc-composer",
-  "sd-wc-style"
+  "sd-wc-style",
 ]);
 
 function isOwnNode(el: Element): boolean {
@@ -229,5 +231,6 @@ export function bootstrap(): void {
   window.addEventListener("pageshow", scheduleSync);
 
   initCollapseDevlogs();
+  initProjectView();
   scheduleSync();
 }

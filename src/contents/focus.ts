@@ -68,9 +68,9 @@ function injectStyles(): void {
       font-size: 13px;
       font-weight: 500;
       border-radius: 20px;
-      border: 1px solid rgba(255,255,255,0.18);
-      background: rgba(255,255,255,0.08);
-      color: inherit;
+      border: 1px solid var(--sd-border);
+      background: var(--sd-surface);
+      color: var(--sd-text);
       cursor: pointer;
       transition: background 0.15s, border-color 0.15s;
       white-space: nowrap;
@@ -80,8 +80,8 @@ function injectStyles(): void {
     }
 
     #${DF_BTN_ID}:hover {
-      background: rgba(255,255,255,0.16);
-      border-color: rgba(255,255,255,0.32);
+      background: var(--sd-border);
+      border-color: var(--sd-text-muted);
     }
 
     body.${DF_ACTIVE_CLASS} #${DF_BTN_ID} {
