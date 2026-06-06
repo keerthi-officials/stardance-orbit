@@ -5,6 +5,7 @@ import {
   enhanceGoalsPanel,
 } from "~/contents/shop";
 import { enhanceHomeComposer } from "~contents/home";
+import { enhanceDistractionFree } from "~contents/focus";
 
 let _syncing = false;
 
@@ -14,7 +15,8 @@ async function syncEnhancements(): Promise<void> {
   try {
     enhanceShopPage();
     enhanceProjectPage();
-    enhanceHomeComposer()
+    enhanceHomeComposer();
+    enhanceDistractionFree();
   } finally {
     _syncing = false;
   }
@@ -50,6 +52,9 @@ const WATCHED_SELECTORS = [
   ".shop-goals__items",
   ".feed-post-card",
   ".feed-composer",
+  ".sd-header",
+  "#sd-df-home-bar",
+  ".feed-home",
 ].join(", ");
 
 const SD_OWN_CLASSES = new Set([
@@ -111,6 +116,7 @@ const SD_OWN_CLASSES = new Set([
   "sd-shell",
   "sd-header",
   "sd-title",
+  "sd-df-btn",
 ]);
 
 const SD_OWN_IDS = new Set([
@@ -119,6 +125,8 @@ const SD_OWN_IDS = new Set([
   "sd-orders-btn",
   "sd-shop-style",
   "sd-goals-style",
+  "sd-df-home-bar",
+  "sd-df-style",
 ]);
 
 function isOwnNode(el: Element): boolean {
@@ -154,7 +162,10 @@ function mutationMatters(mutations: MutationRecord[]): boolean {
         el.classList?.contains("shop-goals__container") ||
         el.classList?.contains("shop-goals__items") ||
         el.classList?.contains("feed-post-card") ||
-        el.classList?.contains("feed-composer") 
+        el.classList?.contains("feed-composer") ||
+        el.classList?.contains("sd-header") ||
+        el.classList?.contains("feed-home") ||
+        el.id === "sd-df-home-bar"
       ) {
         return true;
       }
