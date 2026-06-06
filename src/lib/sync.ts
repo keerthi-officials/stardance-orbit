@@ -6,6 +6,7 @@ import {
 } from "~/contents/shop";
 import { enhanceHomeComposer } from "~contents/home";
 import { enhanceDistractionFree } from "~contents/focus";
+import { enhanceWordCount } from "~contents/word-count";
 
 let _syncing = false;
 
@@ -17,6 +18,7 @@ async function syncEnhancements(): Promise<void> {
     enhanceProjectPage();
     enhanceHomeComposer();
     enhanceDistractionFree();
+    enhanceWordCount();
   } finally {
     _syncing = false;
   }
@@ -55,6 +57,7 @@ const WATCHED_SELECTORS = [
   ".sd-header",
   "#sd-df-home-bar",
   ".feed-home",
+  ".feed-home__frame"
 ].join(", ");
 
 const SD_OWN_CLASSES = new Set([
@@ -117,6 +120,7 @@ const SD_OWN_CLASSES = new Set([
   "sd-header",
   "sd-title",
   "sd-df-btn",
+  "sd-wc-badge"
 ]);
 
 const SD_OWN_IDS = new Set([
@@ -127,6 +131,8 @@ const SD_OWN_IDS = new Set([
   "sd-goals-style",
   "sd-df-home-bar",
   "sd-df-style",
+  "sd-wc-composer",
+  "sd-wc-style"
 ]);
 
 function isOwnNode(el: Element): boolean {
