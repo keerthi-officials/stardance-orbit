@@ -6,10 +6,7 @@
   "author": "keerthi",
   "scripts": {
     "dev": "plasmo dev",
-    "build": "plasmo build",
-    "dev:web": "cd web && npm run dev",
-    "build:web": "cd web && npm run build",
-    "dev:all": "concurrently \"npm run dev\" \"npm run dev:web\""
+    "build": "plasmo build"
   },
   "dependencies": {
     "@plasmohq/messaging": "^0.6.2",

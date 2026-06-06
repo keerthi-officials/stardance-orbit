@@ -12,6 +12,7 @@ import {
   enhanceCollapseDevlogs,
 } from "~contents/collapse-devlogs";
 import { initProjectView, enhanceProjectView } from "~contents/project-view";
+import { initShortcuts } from "~contents/shortcuts";
 
 let _syncing = false;
 
@@ -232,5 +233,6 @@ export function bootstrap(): void {
 
   initCollapseDevlogs();
   initProjectView();
+  initShortcuts();
   scheduleSync();
 }
