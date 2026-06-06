@@ -14,6 +14,7 @@ import {
 import { initProjectView, enhanceProjectView } from "~contents/project-view";
 import { initShortcuts } from "~contents/shortcuts";
 import { enhanceDraftSave } from "~contents/draft-save";
+import { initQuickSearch } from "~contents/quick-search";
 
 let _syncing = false;
 
@@ -240,6 +241,7 @@ export function bootstrap(): void {
 
   initCollapseDevlogs();
   initProjectView();
+  initQuickSearch()
   initShortcuts();
   scheduleSync();
 }
