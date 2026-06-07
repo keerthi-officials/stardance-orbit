@@ -252,12 +252,13 @@ const GOALS_CSS = `
   position: relative;
   display: flex;
   align-items: center;
-  gap: .85rem;
+  gap: .65rem;
   padding: .75rem;
   border-radius: 14px;
   background: rgba(255,255,255,.05);
   border: 1px solid rgba(255,255,255,.08);
   transition: border-color .2s ease, background .2s ease;
+  cursor: default;
 }
 
 .sd-goals__item:hover {
@@ -265,9 +266,83 @@ const GOALS_CSS = `
   background: rgba(255,255,255,.08);
 }
 
+/* Drag handle */
+
+.sd-goals__drag-handle {
+  display: flex;
+  align-items: center;
+  padding: 0 2px;
+  cursor: grab;
+  color: var(--sd-text, #fff);
+  flex-shrink: 0;
+  opacity: 0.5;
+  transition: opacity .15s;
+}
+
+.sd-goals__drag-handle:hover {
+  opacity: 1;
+}
+
+.sd-goals__drag-handle:active {
+  cursor: grabbing;
+}
+
+.sd-goals__item--dragging {
+  opacity: 0.35;
+}
+
+.sd-goals__item--over {
+  outline: 1px dashed rgba(255,255,255,0.3);
+  background: rgba(255,255,255,.06) !important;
+}
+
+/* Quantity counter */
+
+.sd-goals__qty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.sd-goals__qty-btn {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.05);
+  color: rgba(255,255,255,0.6);
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: background .1s;
+  flex-shrink: 0;
+}
+
+.sd-goals__qty-btn:hover {
+  background: rgba(255,255,255,0.14);
+}
+
+.sd-goals__qty-badge {
+  font-size: 10px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: rgba(255,255,255,0.45);
+  min-width: 18px;
+  text-align: center;
+  line-height: 1;
+}
+
+/* Item image */
+
 .sd-goals__img {
-  width: 52px;
-  height: 52px;
+  width: 48px;
+  height: 48px;
   object-fit: contain;
   border-radius: 10px;
   background: rgba(255,255,255,.07);

@@ -1,7 +1,7 @@
 {
   "name": "stardance-orbit",
   "displayName": "stardance-orbit",
-  "version": "4.0.0",
+  "version": "7.0.0",
   "description": "A Chrome extension for the stardance website",
   "author": "keerthi",
   "scripts": {

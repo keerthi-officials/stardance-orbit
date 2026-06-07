@@ -7,6 +7,8 @@ const GOALS_MODE_KEY = "sd_goals_cummode";
 const PROJ_CACHE_KEY = "sd_projected_balance";
 const PROJ_CACHE_TTL = 5 * 60 * 1000;
 const STARDUST_PER_HOUR = 10;
+const GOALS_ORDER_KEY = "sd_goals_order";
+const GOALS_QTY_KEY = "sd_goals_qty";
 
 const STARDUST_ICON = `<img src="https://stardance.hackclub.com/assets/icons/stardust-18e809ef.png" alt="Stardust" class="sd-stardust-icon" />`;
 
@@ -36,6 +38,53 @@ interface FactorScore {
   score: number;
   weight: number;
   note: string;
+}
+
+function getAllQtys(): Record<string, number> {
+  try {
+    return JSON.parse(localStorage.getItem(GOALS_QTY_KEY) ?? "{}");
+  } catch {
+    return {};
+  }
+}
+
+function getQty(href: string): number {
+  return getAllQtys()[href] ?? 1;
+}
+
+function setQty(href: string, value: number): void {
+  const all = getAllQtys();
+  all[href] = Math.max(1, Math.min(30, value));
+  localStorage.setItem(GOALS_QTY_KEY, JSON.stringify(all));
+}
+
+function getSavedOrder(): string[] {
+  try {
+    return JSON.parse(localStorage.getItem(GOALS_ORDER_KEY) ?? "[]");
+  } catch {
+    return [];
+  }
+}
+
+function saveOrder(hrefs: string[]): void {
+  localStorage.setItem(GOALS_ORDER_KEY, JSON.stringify(hrefs));
+}
+
+function sortItemsByOrder(items: WishlistItem[]): WishlistItem[] {
+  const order = getSavedOrder();
+  if (order.length === 0) return items;
+  return [...items].sort((a, b) => {
+    const ai = order.indexOf(a.href);
+    const bi = order.indexOf(b.href);
+    if (ai === -1 && bi === -1) return 0;
+    if (ai === -1) return 1;
+    if (bi === -1) return -1;
+    return ai - bi;
+  });
+}
+
+function getTotalCost(items: WishlistItem[]): number {
+  return items.reduce((sum, i) => sum + i.price * getQty(i.href), 0);
 }
 
 function formatHours(stardust: number): string {
@@ -258,13 +307,65 @@ function buildGoalItem(
   item: WishlistItem,
   balance: number,
   isProjected: boolean,
+  qty: number,
+  onQtyChange: () => void,
 ): HTMLElement {
-  const pct = Math.min(100, item.price > 0 ? (balance / item.price) * 100 : 0);
-  const color = getProgressColor(balance, item.price);
-  const needed = Math.max(0, item.price - balance);
+  const effectivePrice = item.price * qty;
+  const pct = Math.min(
+    100,
+    effectivePrice > 0 ? (balance / effectivePrice) * 100 : 0,
+  );
+  const color = getProgressColor(balance, effectivePrice);
+  const needed = Math.max(0, effectivePrice - balance);
 
   const el = document.createElement("div");
   el.className = "sd-goals__item";
+  el.draggable = true;
+  el.dataset.href = item.href;
+
+  const handle = document.createElement("div");
+  handle.className = "sd-goals__drag-handle";
+  handle.title = "Drag to reorder";
+  handle.innerHTML = `<svg width="12" height="16" viewBox="0 0 12 16" fill="currentColor" opacity="0.4"><circle cx="4" cy="3" r="1.5"/><circle cx="8" cy="3" r="1.5"/><circle cx="4" cy="8" r="1.5"/><circle cx="8" cy="8" r="1.5"/><circle cx="4" cy="13" r="1.5"/><circle cx="8" cy="13" r="1.5"/></svg>`;
+
+  const qtyWrap = document.createElement("div");
+  qtyWrap.className = "sd-goals__qty";
+
+  const minusBtn = document.createElement("button");
+  minusBtn.className = "sd-goals__qty-btn";
+  minusBtn.textContent = "−";
+  minusBtn.title = "Decrease quantity";
+
+  const badge = document.createElement("span");
+  badge.className = "sd-goals__qty-badge";
+  badge.textContent = `×${qty}`;
+
+  const plusBtn = document.createElement("button");
+  plusBtn.className = "sd-goals__qty-btn";
+  plusBtn.textContent = "+";
+  plusBtn.title = "Increase quantity";
+
+  minusBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const next = Math.max(1, qty - 1);
+    setQty(item.href, next);
+    qty = next;
+    badge.textContent = `×${next}`;
+    onQtyChange();
+  });
+
+  plusBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const next = Math.min(30, qty + 1);
+    setQty(item.href, next);
+    qty = next;
+    badge.textContent = `×${next}`;
+    onQtyChange();
+  });
+
+  qtyWrap.appendChild(minusBtn);
+  qtyWrap.appendChild(badge);
+  qtyWrap.appendChild(plusBtn);
 
   if (item.removeFormHtml) {
     const formWrap = document.createElement("div");
@@ -288,11 +389,10 @@ function buildGoalItem(
   const name = document.createElement("a");
   name.href = item.href;
   name.className = "sd-goals__name";
-  name.textContent = item.name;
+  name.textContent = qty > 1 ? `${item.name} ×${qty}` : item.name;
 
   const miniTrack = document.createElement("div");
   miniTrack.className = "sd-goals__mini-track";
-
   const miniFill = document.createElement("div");
   miniFill.className = "sd-goals__mini-fill";
   renderMiniBar(miniFill, pct, color, isProjected);
@@ -314,6 +414,9 @@ function buildGoalItem(
   info.appendChild(name);
   info.appendChild(miniTrack);
   info.appendChild(status);
+
+  el.appendChild(handle);
+  el.appendChild(qtyWrap);
   el.appendChild(img);
   el.appendChild(info);
 
@@ -401,6 +504,7 @@ function buildAccordion(
   balance: number,
   mode: GoalsMode,
   isProjected: boolean,
+  onQtyChange: () => void,
 ): HTMLElement {
   const saved = localStorage.getItem(ACCORDION_KEY);
   const isOpen = saved === null ? true : saved === "open";
@@ -418,7 +522,6 @@ function buildAccordion(
 
   function renderGrid(bal: number, m: GoalsMode, proj: boolean) {
     body.innerHTML = "";
-
     const grid = document.createElement("div");
     grid.className = "sd-goals__grid";
 
@@ -428,22 +531,87 @@ function buildAccordion(
       empty.textContent =
         "No wishlist items yet. Star items in the shop to add them here.";
       grid.appendChild(empty);
-    } else {
-      const sorted = [...items].sort((a, b) => b.price - a.price);
-
-      if (m === "cumulative") {
-        let remaining = bal;
-        sorted.forEach((item) => {
-          const itemBal = Math.min(remaining, item.price);
-          grid.appendChild(buildGoalItem(item, itemBal, proj));
-          remaining = Math.max(0, remaining - item.price);
-        });
-      } else {
-        sorted.forEach((item) => {
-          grid.appendChild(buildGoalItem(item, bal, proj));
-        });
-      }
+      body.appendChild(grid);
+      return;
     }
+
+    const ordered = sortItemsByOrder(items);
+
+    if (m === "cumulative") {
+      let remaining = bal;
+      ordered.forEach((item) => {
+        const qty = getQty(item.href);
+        const effectivePrice = item.price * qty;
+        const itemBal = Math.min(remaining, effectivePrice);
+        grid.appendChild(
+          buildGoalItem(item, itemBal, proj, qty, () => {
+            onQtyChange();
+            renderGrid(bal, m, proj);
+          }),
+        );
+        remaining = Math.max(0, remaining - effectivePrice);
+      });
+    } else {
+      ordered.forEach((item) => {
+        const qty = getQty(item.href);
+        grid.appendChild(
+          buildGoalItem(item, bal, proj, qty, () => {
+            onQtyChange();
+            renderGrid(bal, m, proj);
+          }),
+        );
+      });
+    }
+
+    let dragSrc: HTMLElement | null = null;
+
+    grid.querySelectorAll<HTMLElement>(".sd-goals__item").forEach((row) => {
+      row.addEventListener("dragstart", (e) => {
+        dragSrc = row;
+        row.classList.add("sd-goals__item--dragging");
+        e.dataTransfer!.effectAllowed = "move";
+      });
+
+      row.addEventListener("dragend", () => {
+        row.classList.remove("sd-goals__item--dragging");
+        grid
+          .querySelectorAll(".sd-goals__item")
+          .forEach((r) => r.classList.remove("sd-goals__item--over"));
+        const newOrder = [
+          ...grid.querySelectorAll<HTMLElement>(".sd-goals__item"),
+        ]
+          .map((r) => r.dataset.href ?? "")
+          .filter(Boolean);
+        saveOrder(newOrder);
+        renderGrid(bal, m, proj);
+      });
+
+      row.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        if (!dragSrc || dragSrc === row) return;
+        e.dataTransfer!.dropEffect = "move";
+        grid
+          .querySelectorAll(".sd-goals__item")
+          .forEach((r) => r.classList.remove("sd-goals__item--over"));
+        row.classList.add("sd-goals__item--over");
+      });
+
+      row.addEventListener("drop", (e) => {
+        e.preventDefault();
+        if (!dragSrc || dragSrc === row) return;
+        const allRows = [
+          ...grid.querySelectorAll<HTMLElement>(".sd-goals__item"),
+        ];
+        const srcIdx = allRows.indexOf(dragSrc);
+        const tgtIdx = allRows.indexOf(row);
+        if (srcIdx < tgtIdx) {
+          row.after(dragSrc);
+        } else {
+          row.before(dragSrc);
+        }
+        row.classList.remove("sd-goals__item--over");
+      });
+    });
 
     body.appendChild(grid);
   }
@@ -525,8 +693,6 @@ function buildCumulativeToggle(
 }
 
 function buildGoalsPanel(balance: number, items: WishlistItem[]): HTMLElement {
-  const totalCost = items.reduce((sum, i) => sum + i.price, 0);
-
   let currentTab = "actual" as GoalsTab;
   let currentMode = (localStorage.getItem(GOALS_MODE_KEY) ??
     "cumulative") as GoalsMode;
@@ -542,16 +708,35 @@ function buildGoalsPanel(balance: number, items: WishlistItem[]): HTMLElement {
   topRow.innerHTML = `<span class="sd-goals__title">⭐ My Goal Items</span>`;
 
   const summaryWrap = document.createElement("div");
-  summaryWrap.appendChild(
-    buildSummaryBar(balance, totalCost, false, items.length),
-  );
+
+  function rebuildSummary(bal: number, proj: boolean) {
+    summaryWrap.innerHTML = "";
+    summaryWrap.appendChild(
+      buildSummaryBar(bal, getTotalCost(items), proj, items.length),
+    );
+  }
+
+  rebuildSummary(balance, false);
 
   const projLoader = document.createElement("div");
   projLoader.className = "sd-goals__proj-loader";
   projLoader.style.display = "none";
   projLoader.innerHTML = `<span class="sd-goals__proj-loader-dot"></span> Fetching project data…`;
 
-  const accordion = buildAccordion(items, balance, currentMode, false);
+  function onQtyChange() {
+    const isProj = currentTab === "projected";
+    const bal =
+      isProj && projectedBalance !== null ? projectedBalance : balance;
+    rebuildSummary(bal, isProj);
+  }
+
+  const accordion = buildAccordion(
+    items,
+    balance,
+    currentMode,
+    false,
+    onQtyChange,
+  );
   const rerender = (accordion as any)._rerender as (
     bal: number,
     mode: GoalsMode,
@@ -564,10 +749,7 @@ function buildGoalsPanel(balance: number, items: WishlistItem[]): HTMLElement {
 
     if (isProj) {
       if (projectedBalance !== null) {
-        summaryWrap.innerHTML = "";
-        summaryWrap.appendChild(
-          buildSummaryBar(projectedBalance, totalCost, true, items.length),
-        );
+        rebuildSummary(projectedBalance, true);
         rerender(projectedBalance, currentMode, true);
       } else if (!isLoadingProjected) {
         isLoadingProjected = true;
@@ -576,18 +758,12 @@ function buildGoalsPanel(balance: number, items: WishlistItem[]): HTMLElement {
           projectedBalance = balance + bonus;
           projLoader.style.display = "none";
           isLoadingProjected = false;
-          summaryWrap.innerHTML = "";
-          summaryWrap.appendChild(
-            buildSummaryBar(projectedBalance, totalCost, true, items.length),
-          );
+          rebuildSummary(projectedBalance, true);
           rerender(projectedBalance, currentMode, true);
         });
       }
     } else {
-      summaryWrap.innerHTML = "";
-      summaryWrap.appendChild(
-        buildSummaryBar(balance, totalCost, false, items.length),
-      );
+      rebuildSummary(balance, false);
       rerender(balance, currentMode, false);
     }
   }
