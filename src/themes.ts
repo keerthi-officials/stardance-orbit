@@ -244,7 +244,3 @@ export function applyStoredTheme(): void {
     );
   }
 }
-
-export function getStoredThemeId(): string {
-  return "default";
-}

@@ -181,21 +181,8 @@ export const PROJECT_VIEW_CSS = `
 
   .project-list.sd-list-view .profile-project-card__updated {
     font-size: 11px !important;
-    color: var(--sd-text-muted);   /* Changed from faint to muted */
+    color: var(--sd-text-muted);
     white-space: nowrap !important;
     margin: 0 !important;
-  }
-
-  html.sd-orbit-theme-catppuccin-latte .project-list.sd-list-view .profile-project-card__title {
-    color: #1a1a1a;
-  }
-
-  html.sd-orbit-theme-catppuccin-latte .project-list.sd-list-view .profile-project-card__meta-item,
-  html.sd-orbit-theme-catppuccin-latte .project-list.sd-list-view .profile-project-card__updated {
-    color: #2f2f2f;                    /* darker grey for light mode */
-  }
-
-  html.sd-orbit-theme-catppuccin-latte #${TOOLBAR_ID} .sd-pill {
-    color: #3a3a3a;
   }
 `;

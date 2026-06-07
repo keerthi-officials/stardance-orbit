@@ -31,6 +31,7 @@ A Chrome extension that enhances the [Stardance](https://stardance.hackclub.com)
 
 ### Home page
 - **Devlog template picker** - same template selector available in devlog composer
+- **Feed filter** — filter the home feed by **Everyone** (default), **Following** (only posts from people you follow), or **Mine** (only your own posts).
 
 ### Devlog Templates
 Five built-in templates available in the composer on both the project page and home page:

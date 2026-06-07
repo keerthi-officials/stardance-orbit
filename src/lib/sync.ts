@@ -15,6 +15,7 @@ import { initProjectView, enhanceProjectView } from "~contents/project-view";
 import { initShortcuts } from "~contents/shortcuts";
 import { enhanceDraftSave } from "~contents/draft-save";
 import { initQuickSearch } from "~contents/quick-search";
+import { enhanceFeedFilter } from "~contents/feed-filter";
 
 let _syncing = false;
 
@@ -30,6 +31,7 @@ async function syncEnhancements(): Promise<void> {
     enhanceCollapseDevlogs();
     enhanceProjectView();
     enhanceDraftSave();
+    enhanceFeedFilter()
   } finally {
     _syncing = false;
   }

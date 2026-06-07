@@ -13,10 +13,8 @@ export const DEFAULT_FONT_SETTINGS: FontSettings = {
   fontSize: 1.0,
 };
 
-// Each entry: { label, value (CSS font-family string), googleFamily (for URL) }
 export const FONT_PRESETS: { id: string; label: string; google?: string }[] = [
   { id: "inherit", label: "Site Default" },
-  // Sans-serif
   {
     id: "'Inter', sans-serif",
     label: "Inter",

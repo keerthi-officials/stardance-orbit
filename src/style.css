@@ -340,3 +340,16 @@ html.sd-orbit-light .markdown-content blockquote {
 html.sd-orbit-light .markdown-content hr {
   border-color: #e2e8f0 !important;
 }
+
+html.sd-orbit-light .project-list.sd-list-view .profile-project-card__title {
+  color: #1a1a1a;
+}
+
+html.sd-orbit-light .project-list.sd-list-view .profile-project-card__meta-item,
+html.sd-orbit-light .project-list.sd-list-view .profile-project-card__updated {
+  color: #2f2f2f;
+}
+
+html.sd-orbit-light  #sd-proj-toolbar .sd-pill {
+  color: #3a3a3a;
+}

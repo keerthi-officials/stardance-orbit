@@ -27,7 +27,7 @@ function injectStyles(): void {
       pointer-events: none;
       line-height: 1;
       transition: opacity 0.25s;
-      margin-right: auto; /* pushes word count to the right */
+      margin-right: auto;
     }
     #${DRAFT_STATUS_ID}.sd-draft--visible {
       opacity: 0.45;
