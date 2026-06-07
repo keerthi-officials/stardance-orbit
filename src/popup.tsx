@@ -18,6 +18,7 @@ import {
 } from "~/font-customizer";
 import { FontSelect } from "~components/font-select";
 import { FeatureRow } from "~components/feature-row";
+import { Switch } from "~components/ui/switch";
 
 const STARDANCE_URL = "https://stardance.hackclub.com";
 
@@ -27,6 +28,7 @@ const DEFAULT_CUSTOM: CustomThemeVars = {
   accent: "#7c6af7",
   text: "#e8e8f0",
   border: "rgba(255,255,255,0.12)",
+  isLight: false,
 };
 
 const COLOR_FIELDS: { key: keyof CustomThemeVars; label: string }[] = [
@@ -71,7 +73,10 @@ function Popup() {
       (result) => {
         setActiveTheme(result[THEME_STORAGE_KEY] ?? "rose-pine");
         if (result[CUSTOM_THEME_STORAGE_KEY]) {
-          setCustomVars(JSON.parse(result[CUSTOM_THEME_STORAGE_KEY]));
+          setCustomVars({
+            ...DEFAULT_CUSTOM,
+            ...JSON.parse(result[CUSTOM_THEME_STORAGE_KEY]),
+          });
         }
         setCollapseDevlogs(result[COLLAPSE_STORAGE_KEY] ?? false);
         setProjectListView(result[PROJECT_VIEW_STORAGE_KEY] ?? false);
@@ -85,22 +90,35 @@ function Popup() {
     );
   }, []);
 
-  const applyThemeOnPage = (id: string, css?: string) => {
+  const applyThemeOnPage = (id: string, css?: string, isLight?: boolean) => {
     if (!isOnStardance) return;
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       const tabId = tabs[0]?.id;
       if (!tabId) return;
       chrome.scripting.executeScript({
         target: { tabId },
-        func: (themeId: string, themeCSS: string, key: string) => {
+        func: (
+          themeId: string,
+          themeCSS: string,
+          key: string,
+          light: boolean,
+        ) => {
           localStorage.setItem(key, themeId);
+
           const allClasses = document.documentElement.className
             .split(" ")
-            .filter((c) => c.startsWith("sd-orbit-theme-"));
+            .filter(
+              (c) => c.startsWith("sd-orbit-theme-") || c === "sd-orbit-light",
+            );
           document.documentElement.classList.remove(...allClasses);
+
           if (themeId !== "default") {
             document.documentElement.classList.add(`sd-orbit-theme-${themeId}`);
           }
+          if (light) {
+            document.documentElement.classList.add("sd-orbit-light");
+          }
+
           const STYLE_ID = "sd-orbit-theme-style";
           let style = document.getElementById(
             STYLE_ID,
@@ -115,7 +133,7 @@ function Popup() {
             new CustomEvent("sd-orbit:set-theme", { detail: themeId }),
           );
         },
-        args: [id, css ?? "", THEME_STORAGE_KEY],
+        args: [id, css ?? "", THEME_STORAGE_KEY, isLight ?? false],
       });
     });
   };
@@ -123,7 +141,7 @@ function Popup() {
   const handleThemeSelect = (theme: ThemeMeta) => {
     setActiveTheme(theme.id);
     chrome.storage.local.set({ [THEME_STORAGE_KEY]: theme.id });
-    applyThemeOnPage(theme.id, theme.css);
+    applyThemeOnPage(theme.id, theme.css, theme.light ?? false);
   };
 
   const handleCustomApply = (vars: CustomThemeVars) => {
@@ -134,7 +152,7 @@ function Popup() {
       [THEME_STORAGE_KEY]: CUSTOM_THEME_ID,
       [CUSTOM_THEME_STORAGE_KEY]: JSON.stringify(vars),
     });
-    applyThemeOnPage(CUSTOM_THEME_ID, css);
+    applyThemeOnPage(CUSTOM_THEME_ID, css, vars.isLight);
   };
 
   const handleFontChange = (settings: FontSettings) => {
@@ -263,6 +281,7 @@ function Popup() {
               onClick={() => {
                 if (activeTheme !== CUSTOM_THEME_ID) {
                   setActiveTheme(CUSTOM_THEME_ID);
+                  handleCustomApply(customVars);
                 }
               }}
               className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl border justify-center transition-all duration-150 ${
@@ -295,21 +314,20 @@ function Popup() {
                   <label className="relative cursor-pointer">
                     <span
                       className="block w-7 h-7 rounded-lg border border-white/20 cursor-pointer"
-                      style={{ background: customVars[key] }}
+                      style={{ background: customVars[key] as string }}
                     />
                     <input
                       type="color"
                       value={
-                        customVars[key].startsWith("rgba")
+                        (customVars[key] as string).startsWith("rgba")
                           ? "#888888"
-                          : customVars[key]
+                          : (customVars[key] as string)
                       }
                       onChange={(e) => {
                         const nextVars = {
                           ...customVars,
                           [key]: e.target.value,
                         };
-
                         setCustomVars(nextVars);
                         handleCustomApply(nextVars);
                       }}
@@ -318,9 +336,24 @@ function Popup() {
                   </label>
                 </div>
               ))}
+
+              <div className="flex items-center justify-between gap-3 pt-1 border-t border-white/[0.06] mt-1">
+                <span className="text-[12px] text-white/60 flex-1">
+                  Light mode
+                </span>
+                <Switch
+                  checked={customVars.isLight ?? false}
+                  onCheckedChange={(checked) => {
+                    const nextVars = { ...customVars, isLight: checked };
+                    setCustomVars(nextVars);
+                    handleCustomApply(nextVars);
+                  }}
+                />
+              </div>
             </div>
           </div>
         </div>
+
         <div className="w-full rounded-xl border border-white/[0.08] bg-white/[0.03] p-4 flex flex-col gap-3">
           <div className="w-full flex flex-col gap-3 px-1">
             <FontSelect

@@ -130,36 +130,35 @@ h6,
   font-family: "Comfortaa", "Palanquin Dark", "Poppins", sans-serif;
 }
 
-html.sd-orbit-theme-catppuccin-latte a.sidebar__logo {
+html.sd-orbit-light a.sidebar__logo {
   background-color: #212224 !important;
   border-radius: 8px !important;
   padding: 8px !important;
 }
 
-html.sd-orbit-theme-catppuccin-latte .sd-progress,
-html.sd-orbit-theme-catppuccin-latte .sd-progress {
+html.sd-orbit-light .sd-progress,
+html.sd-orbit-light .sd-progress {
   background: rgba(15, 23, 42, 0.04) !important;
   border: 1px solid #e2e8f0 !important;
 }
 
-html.sd-orbit-theme-catppuccin-latte .sd-progress__balance {
+html.sd-orbit-light .sd-progress__balance {
   color: #64748b !important;
 }
 
-html.sd-orbit-theme-catppuccin-latte .sd-progress__status {
+html.sd-orbit-light .sd-progress__status {
   color: #475569 !important;
 }
 
-html.sd-orbit-theme-catppuccin-latte .sd-progress__status strong {
+html.sd-orbit-light .sd-progress__status strong {
   color: #0f172a !important;
 }
 
-html.sd-orbit-theme-catppuccin-latte .sd-progress__track {
+html.sd-orbit-light .sd-progress__track {
   background: #e2e8f0 !important;
 }
 
-html.sd-orbit-theme-catppuccin-latte .shop-hub__category-link,
-html.sd-orbit-theme-catppuccin-latte .shop-hub__category-link {
+html.sd-orbit-light .shop-hub__category-link {
   border-color: #212224 !important;
   background: linear-gradient(
     180deg,
@@ -168,113 +167,176 @@ html.sd-orbit-theme-catppuccin-latte .shop-hub__category-link {
   ) !important;
 }
 
-html.sd-orbit-theme-catppuccin-latte .shop-item-card__order-cta.action-btn--primary {
+html.sd-orbit-light .shop-item-card__order-cta.action-btn--primary {
   background: #8839ef !important;
   color: white !important;
 }
 
-html.sd-orbit-theme-catppuccin-latte .shop-item-card__order-cta.action-btn--primary.action-btn--disabled {
+html.sd-orbit-light .shop-item-card__order-cta.action-btn--primary.action-btn--disabled {
   background: #94a3b8 !important;
   color: #f8fafc !important;
   opacity: 1 !important;
   cursor: not-allowed !important;
 }
 
-html.sd-orbit-theme-catppuccin-latte .shop-item-card__order-cta .action-btn__label {
+html.sd-orbit-light .shop-item-card__order-cta .action-btn__label {
   color: inherit !important;
 }
 
-html.sd-orbit-theme-catppuccin-latte .shop-item-card__order-cta.action-btn--primary:not(.action-btn--disabled):hover {
+html.sd-orbit-light .shop-item-card__order-cta.action-btn--primary:not(.action-btn--disabled):hover {
   background: #7729dd !important;
 }
 
-html.sd-orbit-theme-catppuccin-latte .feed-composer,
-html.sd-orbit-theme-catppuccin-latte .feed-post-card {
+html.sd-orbit-light .feed-composer,
+html.sd-orbit-light .feed-post-card {
   background: rgba(204, 208, 218, 0.35) !important;
-  border: 2px solid var(--ctp-surface-1) !important;
-  color: var(--ctp-text) !important;
+  border: 2px solid rgba(0,0,0,0.1) !important;
 }
 
-html.sd-orbit-theme-catppuccin-latte .feed-post-card--linked:hover {
+html.sd-orbit-light .feed-post-card--linked:hover {
   background: rgba(188, 192, 204, 0.5) !important;
-  border-color: var(--ctp-surface-2) !important;
+  border-color: rgba(0,0,0,0.15) !important;
 }
 
-html.sd-orbit-theme-catppuccin-latte .feed-post-card--linked {
-  border-color: var(--ctp-surface-0) !important;
+html.sd-orbit-light .feed-post-card--linked {
+  border-color: rgba(0,0,0,0.08) !important;
 }
 
-html.sd-orbit-theme-catppuccin-latte .devlog-detail__comments {
+html.sd-orbit-light .devlog-detail__comments {
   background: rgba(204, 208, 218, 0.35) !important;
-  border: 2px solid var(--ctp-surface-1) !important;
+  border: 2px solid rgba(0,0,0,0.1) !important;
   border-top: 0 !important;
 }
 
-html.sd-orbit-theme-catppuccin-latte #sd-goals-panel {
+html.sd-orbit-light #sd-goals-panel {
   background: rgba(204, 208, 218, 0.4) !important;
-  border-color: var(--ctp-surface-1) !important;
+  border-color: rgba(0,0,0,0.1) !important;
 }
 
-html.sd-orbit-theme-catppuccin-latte .sd-goals__tabs,
-html.sd-orbit-theme-catppuccin-latte .sd-goals__cumtabs {
+html.sd-orbit-light .sd-goals__tabs,
+html.sd-orbit-light .sd-goals__cumtabs {
   background: rgba(0, 0, 0, 0.06) !important;
 }
 
-html.sd-orbit-theme-catppuccin-latte .sd-goals__tab,
-html.sd-orbit-theme-catppuccin-latte .sd-goals__cumtab {
-  color: var(--ctp-subtext-0) !important;
+html.sd-orbit-light .sd-goals__tab,
+html.sd-orbit-light .sd-goals__cumtab {
+  color: rgba(0,0,0,0.5) !important;
 }
 
-html.sd-orbit-theme-catppuccin-latte .sd-goals__tab--active,
-html.sd-orbit-theme-catppuccin-latte .sd-goals__cumtab--active {
+html.sd-orbit-light .sd-goals__tab--active,
+html.sd-orbit-light .sd-goals__cumtab--active {
   background: white !important;
   color: #111827 !important;
 }
 
-html.sd-orbit-theme-catppuccin-latte .sd-goals__chip {
+html.sd-orbit-light .sd-goals__chip {
   background: rgba(0, 0, 0, 0.04) !important;
 }
 
-html.sd-orbit-theme-catppuccin-latte .sd-goals__summary-pct,
-html.sd-orbit-theme-catppuccin-latte .sd-goals__proj-loader {
-  color: var(--ctp-subtext-0) !important;
+html.sd-orbit-light .sd-goals__summary-pct,
+html.sd-orbit-light .sd-goals__proj-loader {
+  color: rgba(0,0,0,0.45) !important;
 }
 
-html.sd-orbit-theme-catppuccin-latte .sd-goals__accordion {
-  border-color: var(--ctp-surface-1) !important;
+html.sd-orbit-light .sd-goals__accordion {
+  border-color: rgba(0,0,0,0.1) !important;
 }
 
-html.sd-orbit-theme-catppuccin-latte .sd-goals__accordion-header {
+html.sd-orbit-light .sd-goals__accordion-header {
   background: rgba(0, 0, 0, 0.04) !important;
-  color: var(--ctp-text) !important;
+  color: rgba(0,0,0,0.8) !important;
 }
 
-html.sd-orbit-theme-catppuccin-latte .sd-goals__accordion-header:hover {
+html.sd-orbit-light .sd-goals__accordion-header:hover {
   background: rgba(0, 0, 0, 0.07) !important;
 }
 
-html.sd-orbit-theme-catppuccin-latte .sd-goals__item {
+html.sd-orbit-light .sd-goals__item {
   background: rgba(0, 0, 0, 0.03) !important;
-  border-color: var(--ctp-surface-1) !important;
+  border-color: rgba(0,0,0,0.1) !important;
 }
 
-html.sd-orbit-theme-catppuccin-latte .sd-goals__item:hover {
+html.sd-orbit-light .sd-goals__item:hover {
   background: rgba(0, 0, 0, 0.06) !important;
-  border-color: var(--ctp-surface-2) !important;
+  border-color: rgba(0,0,0,0.15) !important;
 }
 
-html.sd-orbit-theme-catppuccin-latte .sd-goals__img {
+html.sd-orbit-light .sd-goals__img {
   background: rgba(0, 0, 0, 0.04) !important;
 }
 
-html.sd-orbit-theme-catppuccin-latte .sd-goals__remove {
-  color: var(--ctp-subtext-0) !important;
+html.sd-orbit-light .sd-goals__remove {
+  color: rgba(0,0,0,0.4) !important;
 }
 
-html.sd-orbit-theme-catppuccin-latte .sd-goals__remove:hover {
- color: #fff !important;
+html.sd-orbit-light .sd-goals__remove:hover {
+  color: #fff !important;
 }
 
-html.sd-orbit-theme-catppuccin-latte .sd-goals__empty {
-  color: var(--ctp-subtext-0) !important;
+html.sd-orbit-light .sd-goals__empty {
+  color: rgba(0,0,0,0.4) !important;
+}
+
+html.sd-orbit-light .sd-goals__qty-btn {
+  border-color: rgba(0,0,0,0.15) !important;
+  background: rgba(0,0,0,0.04) !important;
+  color: rgba(0,0,0,0.5) !important;
+}
+
+html.sd-orbit-light .sd-goals__qty-btn:hover {
+  background: rgba(0,0,0,0.09) !important;
+}
+
+html.sd-orbit-light .sd-goals__qty-badge {
+  color: rgba(0,0,0,0.4) !important;
+}
+
+html.sd-orbit-light .sd-goals__drag-handle {
+  color: rgba(0,0,0,0.4) !important;
+}
+
+html.sd-orbit-light .markdown-content h1,
+html.sd-orbit-light .markdown-content h2,
+html.sd-orbit-light .markdown-content h3,
+html.sd-orbit-light .markdown-content h4,
+html.sd-orbit-light .markdown-content h5,
+html.sd-orbit-light .markdown-content h6 {
+  color: #0f172a !important;
+}
+
+html.sd-orbit-light .mission-browse-widget__body {
+  color: #0f172a !important;
+}
+
+html.sd-orbit-light .markdown-content strong {
+  color: #0f172a !important;
+}
+
+html.sd-orbit-light .markdown-content code {
+  color: #7c3aed !important;
+  background: rgba(124, 58, 237, 0.08) !important;
+  border: 1px solid rgba(124, 58, 237, 0.15) !important;
+  border-radius: 4px !important;
+  padding: 1px 5px !important;
+}
+
+html.sd-orbit-light .markdown-content pre,
+html.sd-orbit-light .markdown-content pre code {
+  background: #f1f5f9 !important;
+  color: #1e293b !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 8px !important;
+}
+
+html.sd-orbit-light .markdown-content a {
+  color: #7c3aed !important;
+}
+
+html.sd-orbit-light .markdown-content blockquote {
+  border-left-color: rgba(124, 58, 237, 0.3) !important;
+  color: #475569 !important;
+}
+
+html.sd-orbit-light .markdown-content hr {
+  border-color: #e2e8f0 !important;
 }

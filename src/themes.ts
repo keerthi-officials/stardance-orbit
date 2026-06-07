@@ -15,6 +15,7 @@ export interface ThemeMeta {
   swatch: [string, string];
   css: string;
   preset?: true;
+  light?: true;
 }
 
 export interface CustomThemeVars {
@@ -23,6 +24,7 @@ export interface CustomThemeVars {
   accent: string;
   text: string;
   border: string;
+  isLight?: boolean;
 }
 
 export const THEMES: ThemeMeta[] = [
@@ -46,6 +48,7 @@ export const THEMES: ThemeMeta[] = [
     swatch: ["#eff1f5", "#8839ef"],
     css: catppuccinLatteCSS,
     preset: true,
+    light: true,
   },
   {
     id: "dark-plus",
@@ -60,6 +63,7 @@ export const THEMES: ThemeMeta[] = [
     swatch: ["#fdf6f0", "#e07a8f"],
     css: pastelCSS,
     preset: true,
+    light: true,
   },
   {
     id: "neon",
@@ -80,7 +84,7 @@ export const THEMES: ThemeMeta[] = [
 export const CUSTOM_THEME_ID = "custom";
 
 export function buildCustomCSS(vars: CustomThemeVars): string {
-  const isDark = isColorDark(vars.bg);
+  const isDark = !vars.isLight;
   return `
 html.sd-orbit-theme-custom {
   color-scheme: ${isDark ? "dark" : "light"};
@@ -149,11 +153,6 @@ function rgbToHex(r: number, g: number, b: number): string {
   );
 }
 
-function isColorDark(hex: string): boolean {
-  const [r, g, b] = hexToRgb(hex);
-  return 0.299 * r + 0.587 * g + 0.114 * b < 128;
-}
-
 function darken(hex: string, amount: number): string {
   const [r, g, b] = hexToRgb(hex);
   const f = 1 - amount;
@@ -189,9 +188,13 @@ const ALL_THEME_CLASSES = [
   "sd-orbit-theme-custom",
 ];
 
-export function applyTheme(themeId: string, customCSS?: string): void {
+export function applyTheme(
+  themeId: string,
+  customCSS?: string,
+  isCustomLight?: boolean,
+): void {
   const root = document.documentElement;
-  root.classList.remove(...ALL_THEME_CLASSES);
+  root.classList.remove(...ALL_THEME_CLASSES, "sd-orbit-light");
 
   let style = document.getElementById(
     THEME_STYLE_ID,
@@ -205,11 +208,13 @@ export function applyTheme(themeId: string, customCSS?: string): void {
   if (themeId === CUSTOM_THEME_ID && customCSS) {
     root.classList.add("sd-orbit-theme-custom");
     style.textContent = customCSS;
+    if (isCustomLight) root.classList.add("sd-orbit-light");
   } else {
     const theme = getThemeById(themeId) ?? THEMES[0];
     if (theme.id !== "default")
       root.classList.add(`sd-orbit-theme-${theme.id}`);
     style.textContent = theme.css;
+    if (theme.light) root.classList.add("sd-orbit-light");
   }
 
   try {
@@ -226,8 +231,9 @@ export function applyStoredTheme(): void {
           const id = result[THEME_STORAGE_KEY] ?? "default";
           if (id === CUSTOM_THEME_ID) {
             const raw = result[CUSTOM_THEME_STORAGE_KEY];
-            const css = raw ? buildCustomCSS(JSON.parse(raw)) : "";
-            applyTheme(CUSTOM_THEME_ID, css);
+            const vars: CustomThemeVars = raw ? JSON.parse(raw) : {};
+            const css = raw ? buildCustomCSS(vars) : "";
+            applyTheme(CUSTOM_THEME_ID, css, vars.isLight);
           } else {
             applyTheme(id);
           }
