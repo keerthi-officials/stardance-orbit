@@ -109,12 +109,12 @@ function showRestoreBanner(
   const banner = document.createElement("div");
   banner.className = "sd-draft-banner";
   banner.innerHTML = `
-    <span>Draft restored from your last session</span>
-    <span class="sd-draft-banner__actions">
-      <button class="sd-draft-banner__btn" data-action="keep">Keep</button>
-      <button class="sd-draft-banner__btn sd-draft-banner__btn--discard" data-action="discard">Discard</button>
-    </span>
-  `;
+  <span>Draft restored · attachments not saved</span>
+  <span class="sd-draft-banner__actions">
+    <button class="sd-draft-banner__btn" data-action="keep">Keep</button>
+    <button class="sd-draft-banner__btn sd-draft-banner__btn--discard" data-action="discard">Discard</button>
+  </span>
+`;
 
   banner
     .querySelector('[data-action="keep"]')
@@ -160,16 +160,23 @@ function attachDraftSave(composer: Element): void {
     wcBar.prepend(status);
   }
 
+  let isRestoring = false;
+  let submitted = false;
+
   const saved = localStorage.getItem(draftKey(projectId));
   if (saved && saved.trim() !== "" && textarea.value.trim() === "") {
+    isRestoring = true;
     textarea.value = saved;
     textarea.dispatchEvent(new Event("input", { bubbles: true }));
+    isRestoring = false;
     showRestoreBanner(composer, textarea, projectId, saved);
   }
 
   let saveTimer: ReturnType<typeof setTimeout> | null = null;
 
   textarea.addEventListener("input", () => {
+    if (isRestoring) return;
+    if (submitted) return;
     if (saveTimer) clearTimeout(saveTimer);
     saveTimer = setTimeout(() => {
       const text = textarea.value;
@@ -185,16 +192,16 @@ function attachDraftSave(composer: Element): void {
   form.addEventListener("turbo:submit-end", (e: Event) => {
     const detail = (e as CustomEvent).detail;
     if (detail?.success) {
+      submitted = true;
+      if (saveTimer) clearTimeout(saveTimer);
       localStorage.removeItem(draftKey(projectId));
     }
   });
 
   form.addEventListener("submit", () => {
-    setTimeout(() => {
-      if (textarea.value.trim() === "") {
-        localStorage.removeItem(draftKey(projectId));
-      }
-    }, 500);
+    submitted = true;
+    if (saveTimer) clearTimeout(saveTimer);
+    localStorage.removeItem(draftKey(projectId));
   });
 }
 
