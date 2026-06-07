@@ -111,8 +111,6 @@ Themes apply live on the page without a refresh.
 - Changes apply live; fonts load from Google Fonts on demand
 - Reset to site default with one click
 
----
-
 ## Installation
  
 **Load unpacked (Developer Mode)**
@@ -122,8 +120,6 @@ Themes apply live on the page without a refresh.
 3. Enable **Developer mode** in the top-right corner
 4. Click **Load unpacked**
 5. Select the extracted extension folder
-
----
 
 ## Notes
 - The stardust prediction is an estimate based on signals visible on the page. Actual payouts depend on voter ratings, particularly the originality factor which can't be measured automatically.
